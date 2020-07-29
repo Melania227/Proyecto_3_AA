@@ -5,6 +5,8 @@
  */
 package proyecto3_robots;
 
+import Model.Robot;
+
 /**
  *
  * @author USUARIO
@@ -16,6 +18,7 @@ public class Proyecto3_Robots {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Robot r = new Robot ();
     }
     
 }

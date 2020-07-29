@@ -25,6 +25,7 @@ public class Motor {
     
     public Motor(int tipo) {
         this.tipo = tipo;
+        this.tipoTerreno = new ArrayList();
         if (tipo == 1){
             tipoTerreno.add(TipoTerreno.NORMAL);
             consumo = 0;

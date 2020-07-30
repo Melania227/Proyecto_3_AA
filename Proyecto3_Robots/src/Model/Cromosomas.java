@@ -6,6 +6,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -54,5 +55,21 @@ public class Cromosomas {
         int resultado = Integer.parseInt(res,2);
         //System.out.println(resultado);
         return resultado;
+    }
+    
+    public void cruce (Cromosomas cadena){
+        //System.out.println(cadena.chain);
+        //System.out.println(this.chain);
+        Random rand = new Random();
+        int numParticion = rand.nextInt(24);
+        //System.out.println(numParticion);
+        for (int i = 0; i < numParticion; i++) {
+            int posTemp = this.chain.get(i);
+            this.chain.set(i, cadena.chain.get(i));
+            cadena.chain.set(i, posTemp);
+        }
+        //System.out.println("------------------------");
+        //System.out.println(cadena.chain);
+       //System.out.println(this.chain);
     }
 }

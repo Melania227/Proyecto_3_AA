@@ -119,5 +119,8 @@ public class Robot {
         return new Motor(1);
     }
     
+    public void cruceEntreRobots(Robot robot){
+        this.genes.cruce(robot.genes);
+    }
     
 }

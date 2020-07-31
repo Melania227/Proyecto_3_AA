@@ -7,6 +7,7 @@ package proyecto3_robots;
 
 import Model.Fabrica;
 import Model.Robot;
+import Model.Terreno;
 
 /**
  *
@@ -19,10 +20,12 @@ public class Proyecto3_Robots {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Robot r = new Robot ();
+        /*Robot r = new Robot ();
         Robot r2 = new Robot ();
         Fabrica f = new Fabrica(10);
-        f.mutacion();
+        f.mutacion();*/
+        Terreno t = new Terreno (5);
+        t.imprimirTerreno();
     }
     
 }

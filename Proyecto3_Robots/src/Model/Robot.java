@@ -20,12 +20,13 @@ public class Robot {
     private Terreno terreno;
     private int[] pos;
     private ArrayList <int[]> cadenaMarkov;
+    private ArrayList <String> posiblesMovimientos;
     
     public Robot (Terreno terreno){
         this.terreno = terreno;
         Random random = new Random();
         this.genes = new Cromosomas ();
-        for (int i = 0; i < 32; i++){
+        for (int i = 0; i < 56; i++){
             int num = random.nextInt(2);
             this.genes.getChain().add(num);
         }
@@ -36,7 +37,8 @@ public class Robot {
         this.camara = getCamaraByGenes();
         this.motor = getMotorByGenes();
         this.cadenaMarkov = new ArrayList ();
-        generarCadenaMarkov();
+        generarCadenaMarkov();//ponerlos para cada movimiento
+        this.posiblesMovimientos = new ArrayList ();//ponerlos para cada movimiento
         //System.out.println(this.genes.getChain());
         //System.out.println(this.bateria.getSize());
         //System.out.println(this.camara.getTipo());
@@ -136,11 +138,17 @@ public class Robot {
     
     public int[] comportamiento ()
     {
+        validarMovimiento();
+        for (int i = 0; i < this.posiblesMovimientos.size(); i++) {
+            System.out.println("NO IR A: " + this.posiblesMovimientos.get(i));
+        }
+        
         int posX = this.cadenaMarkov.get(0)[0];
         int posY = this.cadenaMarkov.get(0)[1];
         TipoTerreno tipoTerreno = this.terreno.getMatrizTerreno()[posX][posY];
         double porcentajeArriba = 0.0;
-        if (this.pos[0] != posX && this.pos[1] != posY){
+        validarMovimientoPorTerreno(tipoTerreno, "Arriba");
+        if ((this.pos[0] != posX || this.pos[1] != posY) && !this.posiblesMovimientos.contains("Arriba") && tipoTerreno != tipoTerreno.BLOQUEADO){
             porcentajeArriba = porcentajesCM(tipoTerreno, 0);
         }
         
@@ -148,7 +156,8 @@ public class Robot {
         posY = this.cadenaMarkov.get(1)[1];
         tipoTerreno = this.terreno.getMatrizTerreno()[posX][posY];
         double porcentajeAbajo = 0.0;
-        if (this.pos[0] != posX && this.pos[1] != posY){
+        validarMovimientoPorTerreno(tipoTerreno, "Abajo");
+        if ((this.pos[0] != posX || this.pos[1] != posY) && !this.posiblesMovimientos.contains("Abajo") && tipoTerreno != tipoTerreno.BLOQUEADO){
             porcentajeAbajo = porcentajesCM(tipoTerreno, 1);
         }
         
@@ -156,7 +165,8 @@ public class Robot {
         posY = this.cadenaMarkov.get(2)[1];
         tipoTerreno = this.terreno.getMatrizTerreno()[posX][posY];
         double porcentajeDerecha = 0.0;
-        if (this.pos[0] != posX && this.pos[1] != posY){
+        validarMovimientoPorTerreno(tipoTerreno, "Derecha");
+        if ((this.pos[0] != posX || this.pos[1] != posY) && !this.posiblesMovimientos.contains("Derecha") && tipoTerreno != tipoTerreno.BLOQUEADO){
             porcentajeDerecha = porcentajesCM(tipoTerreno, 2);
         }
        
@@ -164,9 +174,13 @@ public class Robot {
         posY = this.cadenaMarkov.get(3)[1];
         tipoTerreno = this.terreno.getMatrizTerreno()[posX][posY];
         double porcentajeIzquierda = 0.0;
-        if (this.pos[0] != posX && this.pos[1] != posY){
+        validarMovimientoPorTerreno(tipoTerreno, "Izquierda");
+        if ((this.pos[0] != posX || this.pos[1] != posY) && !this.posiblesMovimientos.contains("Izquierda") && tipoTerreno != tipoTerreno.BLOQUEADO){
             porcentajeIzquierda = porcentajesCM(tipoTerreno, 3);
         }
+        
+        System.out.println("CAMARA: " + this.camara.getTipo());
+        System.out.println("MOTOR: " + this.motor.getTipo());
         
         String movimiento =  porcentajeMasAlto(porcentajeArriba, porcentajeAbajo, porcentajeDerecha, porcentajeIzquierda);
         switch(movimiento){
@@ -183,20 +197,86 @@ public class Robot {
                 System.out.println("ELIJO IZQUIERDA: "+ this.cadenaMarkov.get(3)[0] + ", "+ this.cadenaMarkov.get(3)[1]);
                 return this.cadenaMarkov.get(3);
             default:
-                return this.cadenaMarkov.get(0);
+                System.out.println("ME QUEDO");
+                return this.pos;
         }
         //return this.pos;
     }
     
     public String porcentajeMasAlto(double porcentajeArriba, double porcentajeAbajo, double porcentajeDerecha, double porcentajeIzquierda)
     {
+        System.out.println("ARRIBA: " + porcentajeArriba);
+        System.out.println("ABAJO: " + porcentajeAbajo);
+        System.out.println("DERECHA: " + porcentajeDerecha);
+        System.out.println("IZQUIERDA: " + porcentajeIzquierda);
         if (porcentajeArriba > porcentajeAbajo && porcentajeArriba > porcentajeDerecha && porcentajeArriba > porcentajeIzquierda)
             return "Arriba";
         if (porcentajeAbajo > porcentajeDerecha && porcentajeAbajo > porcentajeIzquierda)
             return "Abajo";
         if (porcentajeDerecha> porcentajeIzquierda)
             return "Derecha";
+        if(porcentajeArriba == porcentajeAbajo && porcentajeAbajo == porcentajeDerecha && porcentajeDerecha == porcentajeIzquierda){
+            return "Stay";
+        }
         return "Izquierda";
+    }
+    
+    public void validarMovimiento (){
+        if (this.pos[0] != this.terreno.getSizeTerreno()-1){
+            if(this.pos[1] != 0){
+                this.posiblesMovimientos.add("Arriba");
+                this.posiblesMovimientos.add("Derecha");
+            }
+            else if(this.pos[1] != this.terreno.getSizeTerreno()-1){
+                this.posiblesMovimientos.add("Arriba");
+                this.posiblesMovimientos.add("Izquierda");
+            }
+            else{
+                this.posiblesMovimientos.add("Arriba");
+                this.posiblesMovimientos.add("Derecha");
+                this.posiblesMovimientos.add("Izquierda");
+            }
+        }
+        else{
+            if (this.pos[0] != 0){
+                if(this.pos[1] != 0){
+                    this.posiblesMovimientos.add("Abajo");
+                    this.posiblesMovimientos.add("Derecha");
+                }
+                else if(this.pos[1] != this.terreno.getSizeTerreno()-1){
+                    this.posiblesMovimientos.add("Abajo");
+                    this.posiblesMovimientos.add("Izquierda");
+                }
+                else{
+                    this.posiblesMovimientos.add("Abajo");
+                    this.posiblesMovimientos.add("Derecha");
+                    this.posiblesMovimientos.add("Izquierda");
+                }
+            }
+        }
+    }
+    
+    public void validarMovimientoPorTerreno (TipoTerreno tipoTerreno, String dir){
+        switch (this.motor.getTipo()){
+            case 1:
+                switch (tipoTerreno) {
+                    case MODERADO:
+                        if(!this.posiblesMovimientos.contains(dir)){
+                            this.posiblesMovimientos.add(dir);
+                        }
+                    case DIFICIL:
+                        if(!this.posiblesMovimientos.contains(dir)){
+                            this.posiblesMovimientos.add(dir);
+                        }
+                }
+            case 2:
+                switch (tipoTerreno) {
+                    case DIFICIL:
+                        if(!this.posiblesMovimientos.contains(dir)){
+                            this.posiblesMovimientos.add(dir);
+                        }
+                }
+        }
     }
     
     public double porcentajesCM (TipoTerreno tipoTerreno, int numEstado){
@@ -257,21 +337,9 @@ public class Robot {
     public void generarCadenaMarkov (){
         int posX = this.pos[0]; //fila
         int posY = this.pos[1]; //columna
-        int [] estado = new int[2];
         
-        if(posX != this.terreno.getSizeTerreno()-1){
-            estado[0] = posX+1;
-            estado[1] = posY;
-            System.out.println("ANHADO ARRIBA");
-            this.cadenaMarkov.add(estado);
-        }
-        else{
-            estado[0] = posX;
-            estado[1] = posY;
-            this.cadenaMarkov.add(estado); //se mantuvo porque no puede ir para arriba
-        }
-            
-        if (posX != 0){
+        int [] estado = new int[2];
+        if(posX != 0){
             estado[0] = posX-1;
             estado[1] = posY;
             this.cadenaMarkov.add(estado);
@@ -279,29 +347,43 @@ public class Robot {
         else{
             estado[0] = posX;
             estado[1] = posY;
-            this.cadenaMarkov.add(estado); //se mantuvo porque no puede ir para abajo
-        }
-            
-        if(posY != this.terreno.getSizeTerreno()-1){
-            estado[0] = posX;
-            estado[1] = posY+1;
-            this.cadenaMarkov.add(estado);
-        }
-        else{
-            estado[0] = posX;
-            estado[1] = posY;
-            this.cadenaMarkov.add(estado); //se mantuvo porque no puede ir para derecha
+            this.cadenaMarkov.add(estado); //se mantuvo porque no puede ir para arriba
         }
         
-        if(posY != 0){
-            estado[0] = posX;
-            estado[1] = posY-1;
-            this.cadenaMarkov.add(estado);
+        int [] estado2 = new int[2];
+        if (posX != this.terreno.getSizeTerreno()-1){
+            estado2[0] = posX+1;
+            estado2[1] = posY;
+            this.cadenaMarkov.add(estado2);
         }
         else{
-            estado[0] = posX;
-            estado[1] = posY;
-            this.cadenaMarkov.add(estado); //se mantuvo porque no puede ir para izquierda
+            estado2[0] = posX;
+            estado2[1] = posY;
+            this.cadenaMarkov.add(estado2); //se mantuvo porque no puede ir para abajo
+        }
+           
+        int [] estado3 = new int[2];
+        if(posY != this.terreno.getSizeTerreno()-1){
+            estado3[0] = posX;
+            estado3[1] = posY+1;
+            this.cadenaMarkov.add(estado3);
+        }
+        else{
+            estado3[0] = posX;
+            estado3[1] = posY;
+            this.cadenaMarkov.add(estado3); //se mantuvo porque no puede ir para derecha
+        }
+        
+        int [] estado4 = new int[2];
+        if(posY != 0){
+            estado4[0] = posX;
+            estado4[1] = posY-1;
+            this.cadenaMarkov.add(estado4);
+        }
+        else{
+            estado4[0] = posX;
+            estado4[1] = posY;
+            this.cadenaMarkov.add(estado4); //se mantuvo porque no puede ir para izquierda
         }
     }
 

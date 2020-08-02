@@ -114,6 +114,7 @@ public class Robot {
     }
     
     public Motor getMotorByGenes (){
+        
         int num = this.genes.generarValor(3);
         double porcentaje = (double)num/(double)256;
         //System.out.println(porcentaje);
@@ -133,7 +134,9 @@ public class Robot {
         this.genes.cruce(robot.genes);
     }
     
-    public void comportamiento (){
+    public int[] comportamiento ()
+    {
+        
         int posX = this.cadenaMarkov.get(0)[0];
         int posY = this.cadenaMarkov.get(0)[1];
         TipoTerreno tipoTerreno = this.terreno.getMatrizTerreno()[posX][posY];
@@ -155,11 +158,30 @@ public class Robot {
         double porcentajeIzquierda = porcentajesCM(tipoTerreno);
         
         String movimiento =  porcentajeMasAlto(porcentajeArriba, porcentajeAbajo, porcentajeDerecha, porcentajeIzquierda);
+        switch(movimiento){
+            case "Arriba":
+                return this.cadenaMarkov.get(0);
+            case "Abajo":
+                return this.cadenaMarkov.get(1); 
+            case "Derecha":
+                return this.cadenaMarkov.get(2);
+            case "Izquierda":
+                return this.cadenaMarkov.get(3);
+        
+        }
+        return null;
     }
     
-    public String porcentajeMasAlto(double porcentajeArriba, double porcentajeAbajo, double porcentajeDerecha, double porcentajeIzquierda){
+    public String porcentajeMasAlto(double porcentajeArriba, double porcentajeAbajo, double porcentajeDerecha, double porcentajeIzquierda)
+    {
         double porcentajeAltoAct = porcentajeArriba;
-        return "Velvet";
+        if (porcentajeArriba > porcentajeAbajo && porcentajeArriba > porcentajeDerecha && porcentajeArriba > porcentajeIzquierda)
+            return "Arriba";
+        if (porcentajeAbajo > porcentajeDerecha && porcentajeAbajo > porcentajeIzquierda)
+            return "Abajo";
+        if (porcentajeDerecha> porcentajeIzquierda)
+            return "Derecha";
+        return "Izquierda";
     }
     
     public double porcentajesCM (TipoTerreno tipoTerreno){

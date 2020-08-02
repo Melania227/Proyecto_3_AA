@@ -138,18 +138,23 @@ public class Robot {
     
     public int[] comportamiento ()
     {
-        validarMovimiento();
+        TipoTerreno tipoTerreno = this.terreno.getMatrizTerreno()[this.pos[0]][this.pos[1]];
+        if (tipoTerreno==tipoTerreno.BLOQUEADO){
+            System.out.println("ME QUEDO");
+            return this.pos;
+        }
+        validarMovimientoPorPosicion();
         for (int i = 0; i < this.posiblesMovimientos.size(); i++) {
-            System.out.println("NO IR A: " + this.posiblesMovimientos.get(i));
+            System.out.println("IR A: " + this.posiblesMovimientos.get(i));
         }
         
         int posX = this.cadenaMarkov.get(0)[0];
         int posY = this.cadenaMarkov.get(0)[1];
-        TipoTerreno tipoTerreno = this.terreno.getMatrizTerreno()[posX][posY];
+        tipoTerreno = this.terreno.getMatrizTerreno()[posX][posY];
         double porcentajeArriba = 0.0;
         validarMovimientoPorTerreno(tipoTerreno, "Arriba");
-        if ((this.pos[0] != posX || this.pos[1] != posY) && !this.posiblesMovimientos.contains("Arriba") && tipoTerreno != tipoTerreno.BLOQUEADO){
-            porcentajeArriba = porcentajesCM(tipoTerreno, 0);
+        if ((this.pos[0] != posX || this.pos[1] != posY) && this.posiblesMovimientos.contains("Arriba") && tipoTerreno != tipoTerreno.BLOQUEADO){
+            porcentajeArriba = porcentajesCM(tipoTerreno, 0, posX, posY);
         }
         
         posX = this.cadenaMarkov.get(1)[0];
@@ -157,8 +162,8 @@ public class Robot {
         tipoTerreno = this.terreno.getMatrizTerreno()[posX][posY];
         double porcentajeAbajo = 0.0;
         validarMovimientoPorTerreno(tipoTerreno, "Abajo");
-        if ((this.pos[0] != posX || this.pos[1] != posY) && !this.posiblesMovimientos.contains("Abajo") && tipoTerreno != tipoTerreno.BLOQUEADO){
-            porcentajeAbajo = porcentajesCM(tipoTerreno, 1);
+        if ((this.pos[0] != posX || this.pos[1] != posY) && this.posiblesMovimientos.contains("Abajo") && tipoTerreno != tipoTerreno.BLOQUEADO){
+            porcentajeAbajo = porcentajesCM(tipoTerreno, 1, posX, posY);
         }
         
         posX = this.cadenaMarkov.get(2)[0];
@@ -166,8 +171,8 @@ public class Robot {
         tipoTerreno = this.terreno.getMatrizTerreno()[posX][posY];
         double porcentajeDerecha = 0.0;
         validarMovimientoPorTerreno(tipoTerreno, "Derecha");
-        if ((this.pos[0] != posX || this.pos[1] != posY) && !this.posiblesMovimientos.contains("Derecha") && tipoTerreno != tipoTerreno.BLOQUEADO){
-            porcentajeDerecha = porcentajesCM(tipoTerreno, 2);
+        if ((this.pos[0] != posX || this.pos[1] != posY) && this.posiblesMovimientos.contains("Derecha") && tipoTerreno != tipoTerreno.BLOQUEADO){
+            porcentajeDerecha = porcentajesCM(tipoTerreno, 2, posX, posY);
         }
        
         posX = this.cadenaMarkov.get(3)[0];
@@ -175,8 +180,8 @@ public class Robot {
         tipoTerreno = this.terreno.getMatrizTerreno()[posX][posY];
         double porcentajeIzquierda = 0.0;
         validarMovimientoPorTerreno(tipoTerreno, "Izquierda");
-        if ((this.pos[0] != posX || this.pos[1] != posY) && !this.posiblesMovimientos.contains("Izquierda") && tipoTerreno != tipoTerreno.BLOQUEADO){
-            porcentajeIzquierda = porcentajesCM(tipoTerreno, 3);
+        if ((this.pos[0] != posX || this.pos[1] != posY) && this.posiblesMovimientos.contains("Izquierda") && tipoTerreno != tipoTerreno.BLOQUEADO){
+            porcentajeIzquierda = porcentajesCM(tipoTerreno, 3, posX, posY);
         }
         
         System.out.println("CAMARA: " + this.camara.getTipo());
@@ -200,7 +205,6 @@ public class Robot {
                 System.out.println("ME QUEDO");
                 return this.pos;
         }
-        //return this.pos;
     }
     
     public String porcentajeMasAlto(double porcentajeArriba, double porcentajeAbajo, double porcentajeDerecha, double porcentajeIzquierda)
@@ -221,37 +225,53 @@ public class Robot {
         return "Izquierda";
     }
     
-    public void validarMovimiento (){
-        if (this.pos[0] != this.terreno.getSizeTerreno()-1){
-            if(this.pos[1] != 0){
+    public void validarMovimientoPorPosicion (){
+        if (this.pos[0] == this.terreno.getSizeTerreno()-1){
+            if(this.pos[1] != 0 && this.pos[1] != this.terreno.getSizeTerreno()-1){
+                this.posiblesMovimientos.add("Arriba");
+                this.posiblesMovimientos.add("Derecha");
+                this.posiblesMovimientos.add("Izquierda");
+            }
+            else if(this.pos[1] == 0){
                 this.posiblesMovimientos.add("Arriba");
                 this.posiblesMovimientos.add("Derecha");
             }
-            else if(this.pos[1] != this.terreno.getSizeTerreno()-1){
+            else if(this.pos[1] == this.terreno.getSizeTerreno()-1){
                 this.posiblesMovimientos.add("Arriba");
                 this.posiblesMovimientos.add("Izquierda");
             }
-            else{
-                this.posiblesMovimientos.add("Arriba");
+        }
+        else if (this.pos[0] == 0){            
+            if(this.pos[1] != 0 && this.pos[1] != this.terreno.getSizeTerreno()-1){
+                this.posiblesMovimientos.add("Abajo");
                 this.posiblesMovimientos.add("Derecha");
+                this.posiblesMovimientos.add("Izquierda");
+            }
+            else if(this.pos[1] == 0){
+                this.posiblesMovimientos.add("Abajo");
+                this.posiblesMovimientos.add("Derecha");
+            }
+            else if(this.pos[1] == this.terreno.getSizeTerreno()-1){
+                this.posiblesMovimientos.add("Abajo");
                 this.posiblesMovimientos.add("Izquierda");
             }
         }
         else{
-            if (this.pos[0] != 0){
-                if(this.pos[1] != 0){
-                    this.posiblesMovimientos.add("Abajo");
-                    this.posiblesMovimientos.add("Derecha");
-                }
-                else if(this.pos[1] != this.terreno.getSizeTerreno()-1){
-                    this.posiblesMovimientos.add("Abajo");
-                    this.posiblesMovimientos.add("Izquierda");
-                }
-                else{
-                    this.posiblesMovimientos.add("Abajo");
-                    this.posiblesMovimientos.add("Derecha");
-                    this.posiblesMovimientos.add("Izquierda");
-                }
+            if(this.pos[1] != 0 && this.pos[1] != this.terreno.getSizeTerreno()-1){
+                this.posiblesMovimientos.add("Abajo");
+                this.posiblesMovimientos.add("Arriba");
+                this.posiblesMovimientos.add("Derecha");
+                this.posiblesMovimientos.add("Izquierda");
+            }
+            else if(this.pos[1] == 0){
+                this.posiblesMovimientos.add("Arriba");
+                this.posiblesMovimientos.add("Abajo");
+                this.posiblesMovimientos.add("Derecha");
+            }
+            else if(this.pos[1] == this.terreno.getSizeTerreno()-1){
+                this.posiblesMovimientos.add("Arriba");
+                this.posiblesMovimientos.add("Abajo");
+                this.posiblesMovimientos.add("Izquierda");
             }
         }
     }
@@ -279,11 +299,12 @@ public class Robot {
         }
     }
     
-    public double porcentajesCM (TipoTerreno tipoTerreno, int numEstado){
+    public double porcentajesCM (TipoTerreno tipoTerreno, int numEstado, int fila, int columna){
         numEstado += 4;
         double porcentajeCadenaGenes = this.genes.generarValor(numEstado);
         double porcentajeMotor = porcentajeMotor(tipoTerreno);
-        double porcentajeCamara = porcentajeCamara(); //incompleto
+        numEstado -= 4;
+        double porcentajeCamara = porcentajeCamara(tipoTerreno, numEstado, fila, columna); 
         double porcentajeTotal = (porcentajeCadenaGenes + porcentajeCamara + porcentajeMotor)/3;
         return porcentajeTotal;
     }
@@ -294,18 +315,18 @@ public class Robot {
             case 1:
                 switch (tipoTerreno) {
                     case NORMAL:
-                        return 90.0;
+                        return 100.0;
                     case MODERADO:
                         return 30.0;
                     case DIFICIL:
-                        return 0.0;
+                        return 20.0;
                     default:
                         return 0.0;
                 }
             case 2:
                 switch (tipoTerreno) {
                     case NORMAL:
-                        return 90.0;
+                        return 100.0;
                     case MODERADO:
                         return 90.0;
                     case DIFICIL:
@@ -314,23 +335,109 @@ public class Robot {
                         return 0.0;
                 }
             case 3:
-                return 100.0;
+                switch (tipoTerreno) {
+                    case NORMAL:
+                        return 100.0;
+                    case MODERADO:
+                        return 90.0;
+                    case DIFICIL:
+                        return 80.0;
+                    default:
+                        return 0.0;
+                }
             default:
                 return 0.0;
         }
     }
     
-    public double porcentajeCamara(){
+    public double porcentajeCamara(TipoTerreno tipoTerreno, int numEstado, int fila, int columna){
         int tipoCamara = this.camara.getTipo();
+        TipoTerreno tipoTerreno_1;
+        TipoTerreno tipoTerreno_2;
+        double porcentaje1 = 0.0;
+        double porcentaje2 = 0.0;
+        double porcentaje3 = 0.0;
+        int cantPorcentajesValidos = 0;
         switch (tipoCamara) {
             case 1:
-                return 90.0;
+                System.out.println("Porcentaje: " + porcentajeMotor(tipoTerreno));
+                return porcentajeMotor(tipoTerreno);
             case 2:
-                return 60.0;
+                tipoTerreno_1 = getTipoTerreno(numEstado, fila, columna, 1);
+                System.out.println("NUM ESTADO: " + numEstado);
+                System.out.println("TIPO DE TERRENO ES: " + tipoTerreno);
+                System.out.println("TIPO DE TERRENO ES 2: " + tipoTerreno_1);
+                porcentaje1 = porcentajeMotor(tipoTerreno);
+                porcentaje2 = porcentajeMotor(tipoTerreno_1);
+                cantPorcentajesValidos = getPorcentajesValidos(porcentaje1, porcentaje2, 0.0);
+                System.out.println("Porcentaje: " + porcentaje1 + " + " + porcentaje2);
+                System.out.println("Validos: " + cantPorcentajesValidos);
+                return (porcentaje1 + porcentaje2)/cantPorcentajesValidos;
             case 3:
-                return 30.0;
+                System.out.println("NUM ESTADO: " + numEstado);
+                tipoTerreno_1 = getTipoTerreno(numEstado, fila, columna, 1);
+                tipoTerreno_2 = getTipoTerreno(numEstado, fila, columna, 2);
+                System.out.println("TIPO DE TERRENO ES: " + tipoTerreno);
+                System.out.println("TIPO DE TERRENO ES 2: " + tipoTerreno_1);
+                System.out.println("TIPO DE TERRENO ES 3: " + tipoTerreno_2);
+                porcentaje1 = porcentajeMotor(tipoTerreno);
+                porcentaje2 = porcentajeMotor(tipoTerreno_1);
+                porcentaje3 = porcentajeMotor(tipoTerreno_2);
+                cantPorcentajesValidos = getPorcentajesValidos(porcentaje1, porcentaje2, porcentaje3);
+                System.out.println("Porcentaje: " + porcentaje1 + " + " + porcentaje2 + " + " + porcentaje3);
+                System.out.println("Validos: " + cantPorcentajesValidos);
+                return (porcentaje1 + porcentaje2 + porcentaje3)/cantPorcentajesValidos;
             default:
                 return 0.0;
+        }
+    }
+    
+    public int getPorcentajesValidos(double porcentaje1, double porcentaje2, double porcentaje3){
+        int res = 0;
+        if (porcentaje1 != 0.0){
+            res++;
+        }
+        if (porcentaje2 != 0.0){
+            res++;
+        }
+        if (porcentaje3 != 0.0){
+            res++;
+        }
+        return res;
+    }
+    
+    public TipoTerreno getTipoTerreno(int numEstado, int fila, int columna, int numEspacios){
+        switch (numEstado){
+            case 0:
+                System.out.println("COORDENADAS0*: " + (fila-numEspacios) + ", " + columna);
+                if ((fila-numEspacios)<=0){
+                    System.out.println("COORDENADAS0: " + (fila-numEspacios) + ", " + columna);
+                    return this.terreno.getMatrizTerreno()[fila-numEspacios][columna];
+                }
+                return TipoTerreno.BLOQUEADO;
+            case 1:
+                System.out.println("COORDENADAS1*: " + (fila+numEspacios) + ", " + columna);
+                if ((fila+numEspacios)<=this.terreno.getSizeTerreno()-1){
+                    System.out.println("COORDENADAS1: " + (fila+numEspacios) + ", " + columna);
+                    return this.terreno.getMatrizTerreno()[fila+numEspacios][columna];
+                }
+                return TipoTerreno.BLOQUEADO;
+            case 2:
+                System.out.println("COORDENADAS2*: " + fila + ", " + (columna+numEspacios));
+                if ((columna+numEspacios)<=this.terreno.getSizeTerreno()-1){
+                    System.out.println("COORDENADAS2: " + fila + ", " + (columna+numEspacios));
+                    return this.terreno.getMatrizTerreno()[fila][columna+numEspacios];
+                }
+                return TipoTerreno.BLOQUEADO;
+            case 3:
+                System.out.println("COORDENADAS3*: " + fila + ", " + (columna-numEspacios));
+                if ((columna-numEspacios)<=0){
+                    System.out.println("COORDENADAS3: " + fila + ", " + (columna-numEspacios));
+                    return this.terreno.getMatrizTerreno()[fila][columna-numEspacios];
+                }
+                return TipoTerreno.BLOQUEADO;
+            default:
+                return TipoTerreno.BLOQUEADO;
         }
     }
     

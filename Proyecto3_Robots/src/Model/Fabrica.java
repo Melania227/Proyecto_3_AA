@@ -19,7 +19,7 @@ public class Fabrica {
     
     public Fabrica(int cantidadDeIndividuos, Terreno terreno) {
         Random rand = new Random();
-        this.indiceMutacion = rand.nextInt(32);
+        this.indiceMutacion = rand.nextInt(56);
         this.poblacion = new ArrayList ();
         this.cantidadDeIndividuos = cantidadDeIndividuos;
         for (int i = 0; i < cantidadDeIndividuos; i++) {
@@ -51,7 +51,7 @@ public class Fabrica {
         cruceGenes();
         Random rand = new Random();
         int i = rand.nextInt(this.cantidadDeIndividuos);
-        int j = rand.nextInt(32);
+        int j = rand.nextInt(56);
         System.out.println("CAMBIA: " + this.indiceMutacion);
         for (int m = 0; m < this.indiceMutacion; m++) {
             if (this.poblacion.get(i).getGenes().getChain().get(j) == 1){
@@ -62,7 +62,7 @@ public class Fabrica {
             }
             System.out.println("INDICE: "+ i + ", " + j);
             i = rand.nextInt(this.cantidadDeIndividuos);
-            j = rand.nextInt(32);
+            j = rand.nextInt(56);
         }
         
         cruceGenes();

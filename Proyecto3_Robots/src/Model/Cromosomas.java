@@ -49,6 +49,30 @@ public class Cromosomas {
                     res +=String.valueOf(this.chain.get(i));
                 }
                 break;
+            case 4:
+                for(int i = 24; i < 32; i++)
+                {
+                    res +=String.valueOf(this.chain.get(i));
+                }
+                break;
+            case 5:
+                for(int i = 32; i < 40; i++)
+                {
+                    res +=String.valueOf(this.chain.get(i));
+                }
+                break;
+            case 6:
+                for(int i = 40; i < 48; i++)
+                {
+                    res +=String.valueOf(this.chain.get(i));
+                }
+                break;
+            case 7:
+                for(int i = 48; i < 56; i++)
+                {
+                    res +=String.valueOf(this.chain.get(i));
+                }
+                break;
             default:
                 res = "0";
         }
@@ -61,7 +85,7 @@ public class Cromosomas {
         //System.out.println(cadena.chain);
         //System.out.println(this.chain);
         Random rand = new Random();
-        int numParticion = rand.nextInt(24);
+        int numParticion = rand.nextInt(56);
         //System.out.println(numParticion);
         for (int i = 0; i < numParticion; i++) {
             int posTemp = this.chain.get(i);

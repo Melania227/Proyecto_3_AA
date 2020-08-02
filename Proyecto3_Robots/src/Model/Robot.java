@@ -136,45 +136,60 @@ public class Robot {
     
     public int[] comportamiento ()
     {
-        
         int posX = this.cadenaMarkov.get(0)[0];
         int posY = this.cadenaMarkov.get(0)[1];
         TipoTerreno tipoTerreno = this.terreno.getMatrizTerreno()[posX][posY];
-        double porcentajeArriba = porcentajesCM(tipoTerreno);
-       
+        double porcentajeArriba = 0.0;
+        if (this.pos[0] != posX && this.pos[1] != posY){
+            porcentajeArriba = porcentajesCM(tipoTerreno, 0);
+        }
+        
         posX = this.cadenaMarkov.get(1)[0];
         posY = this.cadenaMarkov.get(1)[1];
         tipoTerreno = this.terreno.getMatrizTerreno()[posX][posY];
-        double porcentajeAbajo = porcentajesCM(tipoTerreno);
+        double porcentajeAbajo = 0.0;
+        if (this.pos[0] != posX && this.pos[1] != posY){
+            porcentajeAbajo = porcentajesCM(tipoTerreno, 1);
+        }
         
         posX = this.cadenaMarkov.get(2)[0];
         posY = this.cadenaMarkov.get(2)[1];
         tipoTerreno = this.terreno.getMatrizTerreno()[posX][posY];
-        double porcentajeDerecha = porcentajesCM(tipoTerreno);
+        double porcentajeDerecha = 0.0;
+        if (this.pos[0] != posX && this.pos[1] != posY){
+            porcentajeDerecha = porcentajesCM(tipoTerreno, 2);
+        }
        
         posX = this.cadenaMarkov.get(3)[0];
         posY = this.cadenaMarkov.get(3)[1];
         tipoTerreno = this.terreno.getMatrizTerreno()[posX][posY];
-        double porcentajeIzquierda = porcentajesCM(tipoTerreno);
+        double porcentajeIzquierda = 0.0;
+        if (this.pos[0] != posX && this.pos[1] != posY){
+            porcentajeIzquierda = porcentajesCM(tipoTerreno, 3);
+        }
         
         String movimiento =  porcentajeMasAlto(porcentajeArriba, porcentajeAbajo, porcentajeDerecha, porcentajeIzquierda);
         switch(movimiento){
             case "Arriba":
+                System.out.println("ELIJO ARRIBA: "+ this.cadenaMarkov.get(0)[0] + ", "+ this.cadenaMarkov.get(0)[1]);
                 return this.cadenaMarkov.get(0);
             case "Abajo":
+                System.out.println("ELIJO ABAJO: "+ this.cadenaMarkov.get(1)[0] + ", "+ this.cadenaMarkov.get(1)[1]);
                 return this.cadenaMarkov.get(1); 
             case "Derecha":
+                System.out.println("ELIJO DERECHA: "+ this.cadenaMarkov.get(2)[0] + ", "+ this.cadenaMarkov.get(2)[1]);
                 return this.cadenaMarkov.get(2);
             case "Izquierda":
+                System.out.println("ELIJO IZQUIERDA: "+ this.cadenaMarkov.get(3)[0] + ", "+ this.cadenaMarkov.get(3)[1]);
                 return this.cadenaMarkov.get(3);
-        
+            default:
+                return this.cadenaMarkov.get(0);
         }
-        return null;
+        //return this.pos;
     }
     
     public String porcentajeMasAlto(double porcentajeArriba, double porcentajeAbajo, double porcentajeDerecha, double porcentajeIzquierda)
     {
-        double porcentajeAltoAct = porcentajeArriba;
         if (porcentajeArriba > porcentajeAbajo && porcentajeArriba > porcentajeDerecha && porcentajeArriba > porcentajeIzquierda)
             return "Arriba";
         if (porcentajeAbajo > porcentajeDerecha && porcentajeAbajo > porcentajeIzquierda)
@@ -184,10 +199,13 @@ public class Robot {
         return "Izquierda";
     }
     
-    public double porcentajesCM (TipoTerreno tipoTerreno){
+    public double porcentajesCM (TipoTerreno tipoTerreno, int numEstado){
+        numEstado += 4;
+        double porcentajeCadenaGenes = this.genes.generarValor(numEstado);
         double porcentajeMotor = porcentajeMotor(tipoTerreno);
-        double porcentajeCamara = porcentajeCamara();
-        return 0.0;
+        double porcentajeCamara = porcentajeCamara(); //incompleto
+        double porcentajeTotal = (porcentajeCadenaGenes + porcentajeCamara + porcentajeMotor)/3;
+        return porcentajeTotal;
     }
     
     public double porcentajeMotor(TipoTerreno tipoTerreno){
@@ -237,21 +255,54 @@ public class Robot {
     }
     
     public void generarCadenaMarkov (){
-        int posX = this.pos[0];
-        int posY = this.pos[1];
+        int posX = this.pos[0]; //fila
+        int posY = this.pos[1]; //columna
         int [] estado = new int[2];
-        estado[0] = posX;
-        estado[1] = posY-1;
-        this.cadenaMarkov.add(estado);
-        estado[0] = posX;
-        estado[1] = posY+1;
-        this.cadenaMarkov.add(estado);
-        estado[0] = posX+1;
-        estado[1] = posY;
-        this.cadenaMarkov.add(estado);
-        estado[0] = posX-1;
-        estado[1] = posY;
-        this.cadenaMarkov.add(estado);
+        
+        if(posX != this.terreno.getSizeTerreno()-1){
+            estado[0] = posX+1;
+            estado[1] = posY;
+            System.out.println("ANHADO ARRIBA");
+            this.cadenaMarkov.add(estado);
+        }
+        else{
+            estado[0] = posX;
+            estado[1] = posY;
+            this.cadenaMarkov.add(estado); //se mantuvo porque no puede ir para arriba
+        }
+            
+        if (posX != 0){
+            estado[0] = posX-1;
+            estado[1] = posY;
+            this.cadenaMarkov.add(estado);
+        }
+        else{
+            estado[0] = posX;
+            estado[1] = posY;
+            this.cadenaMarkov.add(estado); //se mantuvo porque no puede ir para abajo
+        }
+            
+        if(posY != this.terreno.getSizeTerreno()-1){
+            estado[0] = posX;
+            estado[1] = posY+1;
+            this.cadenaMarkov.add(estado);
+        }
+        else{
+            estado[0] = posX;
+            estado[1] = posY;
+            this.cadenaMarkov.add(estado); //se mantuvo porque no puede ir para derecha
+        }
+        
+        if(posY != 0){
+            estado[0] = posX;
+            estado[1] = posY-1;
+            this.cadenaMarkov.add(estado);
+        }
+        else{
+            estado[0] = posX;
+            estado[1] = posY;
+            this.cadenaMarkov.add(estado); //se mantuvo porque no puede ir para izquierda
+        }
     }
-    
+
 }

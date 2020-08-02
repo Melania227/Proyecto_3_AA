@@ -14,8 +14,8 @@ public class Medio {
     private Terreno terreno;
 
     public Medio() {
-        this.fabricaRobots = new Fabrica(10);
         this.terreno = new Terreno (5);
+        this.fabricaRobots = new Fabrica(10, this.terreno);
     }
     
     public Medio(Fabrica fabricaRobots, Terreno terreno) {

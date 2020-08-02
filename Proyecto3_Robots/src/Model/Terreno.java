@@ -50,6 +50,16 @@ public class Terreno {
     public void setMatrizTerreno(TipoTerreno[][] matrizTerreno) {
         this.matrizTerreno = matrizTerreno;
     }
+
+    public int getSizeTerreno() {
+        return sizeTerreno;
+    }
+
+    public void setSizeTerreno(int sizeTerreno) {
+        this.sizeTerreno = sizeTerreno;
+    }
+    
+    
     
     public void imprimirTerreno(){
         String res = "";

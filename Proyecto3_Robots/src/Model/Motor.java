@@ -4,13 +4,14 @@
  * and open the template in the editor.
  */
 package Model;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author USUARIO
  */
-public class Motor {
+public class Motor implements Serializable{
     private int tipo;
     private ArrayList <TipoTerreno> tipoTerreno;
     private int consumo;

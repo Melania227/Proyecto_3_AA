@@ -5,10 +5,12 @@
  */
 package Model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author USUARIO
  */
-public enum TipoTerreno {
+public enum TipoTerreno implements Serializable{
     NORMAL, MODERADO, DIFICIL, BLOQUEADO
 }

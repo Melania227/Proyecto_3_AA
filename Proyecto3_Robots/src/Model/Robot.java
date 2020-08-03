@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,7 +13,7 @@ import java.util.Random;
  *
  * @author USUARIO
  */
-public class Robot {
+public class Robot implements Serializable{
     private Camara camara;
     private Bateria bateria;
     private Motor motor;
@@ -22,6 +23,7 @@ public class Robot {
     private ArrayList <int[]> cadenaMarkov;
     private ArrayList <String> posiblesMovimientos;
     private ArrayList <int[]> casillasVisitadas; 
+    private boolean finalizado;
     
     public Robot (Terreno terreno){
         this.terreno = terreno;
@@ -44,6 +46,9 @@ public class Robot {
         posTemp[0]=this.pos[0];
         posTemp[1]=this.pos[1];
         this.casillasVisitadas.add(posTemp);
+        this.finalizado = false;
+        System.out.println("CAMARA: " + this.camara.getTipo());
+        System.out.println("MOTOR: " + this.motor.getTipo());
     }
 
     public Robot(Camara camara, Bateria bateria, Motor motor) {
@@ -74,6 +79,14 @@ public class Robot {
 
     public void setBateria(Bateria bateria) {
         this.bateria = bateria;
+    }
+
+    public boolean isFinalizado() {
+        return finalizado;
+    }
+
+    public void setFinalizado(boolean finalizado) {
+        this.finalizado = finalizado;
     }
 
     public Motor getMotor() {
@@ -218,8 +231,8 @@ public class Robot {
             }
         }
         
-        System.out.println("CAMARA: " + this.camara.getTipo());
-        System.out.println("MOTOR: " + this.motor.getTipo());
+//        System.out.println("CAMARA: " + this.camara.getTipo());
+//        System.out.println("MOTOR: " + this.motor.getTipo());
         
         String movimiento =  obtenerMovimiento(porcentajeArriba, porcentajeAbajo, porcentajeDerecha, porcentajeIzquierda);
         switch(movimiento){
@@ -569,7 +582,9 @@ public class Robot {
                     this.pos = comportamiento();
                 break;
             case 3:
-                this.pos = comportamiento();
+                if (this.terreno.getMatrizTerreno()[this.pos[0]][this.pos[1]] != TipoTerreno.BLOQUEADO){
+                    this.pos = comportamiento();
+                }
                 break;
             default:
                 this.pos = comportamiento();
@@ -577,6 +592,12 @@ public class Robot {
         if (this.terreno.getMatrizTerreno()[this.pos[0]][this.pos[1]]== TipoTerreno.BLOQUEADO){
             this.pos[0]= arreglo[0];
             this.pos[1]= arreglo[1];
+        }
+        if (this.pos[0]==0 && this.pos[1]==this.terreno.getSizeTerreno()-1){
+            finalizado = true;
+        }
+        if (finalizado){
+            System.out.println("FINALIZAMOS BROSQUI. ----------------------------------------");
         }
     }
 }

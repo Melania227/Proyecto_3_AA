@@ -5,11 +5,13 @@
  */
 package Model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author USUARIO
  */
-public class Bateria {
+public class Bateria implements Serializable{
     private int costo;
     private int size;
     private int carga;

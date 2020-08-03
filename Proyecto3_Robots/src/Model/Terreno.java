@@ -5,13 +5,14 @@
  */
 package Model;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
  *
  * @author USUARIO
  */
-public class Terreno {
+public class Terreno implements Serializable{
     private TipoTerreno[][] matrizTerreno;
     private int sizeTerreno;
     

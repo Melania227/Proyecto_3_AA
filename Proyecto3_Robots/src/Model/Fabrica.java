@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,7 +13,7 @@ import java.util.Random;
  *
  * @author USUARIO
  */
-public class Fabrica {
+public class Fabrica implements Serializable{
     private ArrayList <Robot> poblacion;
     private int cantidadDeIndividuos;
     private int indiceMutacion;

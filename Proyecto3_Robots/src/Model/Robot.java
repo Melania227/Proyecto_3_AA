@@ -554,6 +554,29 @@ public class Robot {
     
     public void moverEnTerreno(){
         generarCadenaMarkov();
-        this.pos = comportamiento();
+        int[] arreglo = new int[2];
+        arreglo[0] = this.pos[0];
+        arreglo[1] = this.pos[1];
+        switch(this.motor.getTipo()){
+            case 1:
+                if(this.terreno.getMatrizTerreno()[this.pos[0]][this.pos[1]]== TipoTerreno.NORMAL)
+                    this.pos = comportamiento();
+                break;
+            case 2:
+                if(this.terreno.getMatrizTerreno()[this.pos[0]][this.pos[1]]== TipoTerreno.NORMAL)
+                    this.pos = comportamiento();
+                else if(this.terreno.getMatrizTerreno()[this.pos[0]][this.pos[1]]== TipoTerreno.MODERADO)
+                    this.pos = comportamiento();
+                break;
+            case 3:
+                this.pos = comportamiento();
+                break;
+            default:
+                this.pos = comportamiento();
+        }
+        if (this.terreno.getMatrizTerreno()[this.pos[0]][this.pos[1]]== TipoTerreno.BLOQUEADO){
+            this.pos[0]= arreglo[0];
+            this.pos[1]= arreglo[1];
+        }
     }
 }

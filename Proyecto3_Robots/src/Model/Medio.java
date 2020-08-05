@@ -21,7 +21,7 @@ public class Medio implements Serializable{
         this.terreno = new Terreno (sizeTerreno);
         this.fabricaRobots = new Fabrica(cantRobots, this.terreno);
         this.historialGeneraciones = new ArrayList ();
-        start();
+        this.historialGeneraciones.add(this.fabricaRobots);
     }
     
     public Medio(Fabrica fabricaRobots, Terreno terreno) {
@@ -75,5 +75,9 @@ public class Medio implements Serializable{
         }
         System.out.println("LLEGARON SOLO: " + llegaron);
     }
+    
+//    public void newGeneration (){
+//        this.fabricaRobots.cruceEntreIndividuosGen();
+//    }
     
 }

@@ -97,4 +97,6 @@ public class Cromosomas implements Serializable{
         //System.out.println(cadena.chain);
        //System.out.println(this.chain);
     }
+    
+    
 }

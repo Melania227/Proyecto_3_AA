@@ -21,6 +21,11 @@ public class Proyecto3_Robots {
      */
     public static void main(String[] args) {
         Medio m = new Medio(200, 20);
+        m.start();
+        Fabrica f = m.getFabricaRobots().getNuevaGeneracion();
+        f.cruceEntreIndividuosGen();
+        m.setFabricaRobots(f);
+        m.start();
     }
     
 }

@@ -47,8 +47,8 @@ public class Robot implements Serializable{
         posTemp[1]=this.pos[1];
         this.casillasVisitadas.add(posTemp);
         this.finalizado = false;
-        System.out.println("CAMARA: " + this.camara.getTipo());
-        System.out.println("MOTOR: " + this.motor.getTipo());
+        //System.out.println("CAMARA: " + this.camara.getTipo());
+        //System.out.println("MOTOR: " + this.motor.getTipo());
     }
 
     public Robot(Camara camara, Bateria bateria, Motor motor) {
@@ -237,19 +237,19 @@ public class Robot implements Serializable{
         String movimiento =  obtenerMovimiento(porcentajeArriba, porcentajeAbajo, porcentajeDerecha, porcentajeIzquierda);
         switch(movimiento){
             case "Arriba":
-                System.out.println("ELIJO ARRIBA: "+ this.cadenaMarkov.get(0)[0] + ", "+ this.cadenaMarkov.get(0)[1]);
+               // System.out.println("ELIJO ARRIBA: "+ this.cadenaMarkov.get(0)[0] + ", "+ this.cadenaMarkov.get(0)[1]);
                 return this.cadenaMarkov.get(0);
             case "Abajo":
-                System.out.println("ELIJO ABAJO: "+ this.cadenaMarkov.get(1)[0] + ", "+ this.cadenaMarkov.get(1)[1]);
+              //  System.out.println("ELIJO ABAJO: "+ this.cadenaMarkov.get(1)[0] + ", "+ this.cadenaMarkov.get(1)[1]);
                 return this.cadenaMarkov.get(1); 
             case "Derecha":
-                System.out.println("ELIJO DERECHA: "+ this.cadenaMarkov.get(2)[0] + ", "+ this.cadenaMarkov.get(2)[1]);
+              //  System.out.println("ELIJO DERECHA: "+ this.cadenaMarkov.get(2)[0] + ", "+ this.cadenaMarkov.get(2)[1]);
                 return this.cadenaMarkov.get(2);
             case "Izquierda":
-                System.out.println("ELIJO IZQUIERDA: "+ this.cadenaMarkov.get(3)[0] + ", "+ this.cadenaMarkov.get(3)[1]);
+             //   System.out.println("ELIJO IZQUIERDA: "+ this.cadenaMarkov.get(3)[0] + ", "+ this.cadenaMarkov.get(3)[1]);
                 return this.cadenaMarkov.get(3);
             default:
-                System.out.println("ME QUEDO");
+              //  System.out.println("ME QUEDO");
                 return this.pos;
         }
     }
@@ -266,20 +266,11 @@ public class Robot implements Serializable{
     
     public String obtenerMovimiento(double porcentajeArriba, double porcentajeAbajo, double porcentajeDerecha, double porcentajeIzquierda)
     {
-//        System.out.println("ARRIBA: " + porcentajeArriba);
-//        System.out.println("ABAJO: " + porcentajeAbajo);
-//        System.out.println("DERECHA: " + porcentajeDerecha);
-//        System.out.println("IZQUIERDA: " + porcentajeIzquierda);
         double porcentajeTotal = 4.0 + porcentajeArriba + porcentajeAbajo + porcentajeDerecha + porcentajeIzquierda;
         porcentajeArriba = ((porcentajeArriba+1.0) * 100)/porcentajeTotal;
         porcentajeAbajo = ((porcentajeAbajo+1.0) * 100)/porcentajeTotal;
         porcentajeDerecha = ((porcentajeDerecha+1.0) * 100)/porcentajeTotal;
         porcentajeIzquierda = ((porcentajeIzquierda+1.0) * 100)/porcentajeTotal;
-//        System.out.println("ARRIBA: " + porcentajeArriba);
-//        System.out.println("ABAJO: " + porcentajeAbajo);
-//        System.out.println("DERECHA: " + porcentajeDerecha);
-//        System.out.println("IZQUIERDA: " + porcentajeIzquierda);
-        //return "Derecha";
         Random rand = new Random ();
         int porcentajeRandom = rand.nextInt(100);
         if (porcentajeRandom < porcentajeArriba){
@@ -597,7 +588,7 @@ public class Robot implements Serializable{
             finalizado = true;
         }
         if (finalizado){
-            System.out.println("FINALIZAMOS BROSQUI. ----------------------------------------");
+            //System.out.println("FINALIZAMOS BROSQUI. ----------------------------------------");
         }
     }
 }

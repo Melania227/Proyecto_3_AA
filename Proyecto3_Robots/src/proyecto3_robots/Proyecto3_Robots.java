@@ -3,6 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+/*
+ * CLASE MAIN
+ */
 package proyecto3_robots;
 
 import Model.Fabrica;
@@ -32,6 +36,7 @@ public class Proyecto3_Robots {
         f.getNuevasCaracteristicas();
         m.setFabricaRobots(f);
         m.start();
+        
         for (int i = 2; i < 10; i++) {
             System.err.println(i+" generacion");
             f = m.getFabricaRobots().getNuevaGeneracion();

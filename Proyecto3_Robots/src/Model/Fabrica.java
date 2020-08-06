@@ -3,6 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+/*
+ * CLASE FABRICA
+ */
 package Model;
 
 import java.io.Serializable;
@@ -115,7 +118,7 @@ public class Fabrica implements Serializable{
                 calificaciones.add(100.0);
             }
             else {
-                calificaciones.add(1.0);
+                calificaciones.add(50.0);
             }
             total += calificaciones.get(i);
         }
@@ -154,9 +157,11 @@ public class Fabrica implements Serializable{
             this.poblacion.get(i).setBateria(this.poblacion.get(i).getBateriaByGenes());
             this.poblacion.get(i).setCamara(this.poblacion.get(i).getCamaraByGenes());
             this.poblacion.get(i).setMotor(this.poblacion.get(i).getMotorByGenes());
-            //this.poblacion.get(i).setPos(posInicial[0], posInicial[1]);
-            //this.poblacion.get(i).getBateria().resetCarga();
+            this.poblacion.get(i).setPos(posInicial[0], posInicial[1]);
+            this.poblacion.get(i).getBateria().resetCarga();
             this.poblacion.get(i).setFinalizado(false);
+            this.poblacion.get(i).setCasillasVisitadas(new ArrayList());
+            this.poblacion.get(i).setPosiblesMovimientos(new ArrayList());
             //System.out.println("---- " + this.poblacion.get(i).getBateria().getCarga() + " " + this.poblacion.get(i).getCamara().getTipo()+ " " + this.poblacion.get(i).getMotor().getTipo() + " " + this.poblacion.get(i).getPos()[0] + ", " + this.poblacion.get(i).getPos()[1] + " " + this.poblacion.get(i).isFinalizado());
         }
     }

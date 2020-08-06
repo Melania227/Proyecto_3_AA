@@ -3,6 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+/*
+ * CLASE MEDIO
+ */
 package Model;
 
 import java.io.Serializable;
@@ -59,9 +62,11 @@ public class Medio implements Serializable{
         posInicial[0]=this.terreno.getSizeTerreno()-1;
         posInicial[1]=0;
         for (int i = 0; i < this.fabricaRobots.getPoblacion().size(); i++) {
-            //this.fabricaRobots.getPoblacion().get(i).setFinalizado(false);
-           // this.fabricaRobots.getPoblacion().get(i).setPos(posInicial[0], posInicial[1]);
-           // this.fabricaRobots.getPoblacion().get(i).getBateria().resetCarga();
+            this.fabricaRobots.getPoblacion().get(i).setFinalizado(false);
+            this.fabricaRobots.getPoblacion().get(i).setPos(posInicial[0], posInicial[1]);
+            this.fabricaRobots.getPoblacion().get(i).getBateria().resetCarga();
+            this.fabricaRobots.getPoblacion().get(i).setCasillasVisitadas(new ArrayList());
+            this.fabricaRobots.getPoblacion().get(i).setPosiblesMovimientos(new ArrayList());
             while(this.fabricaRobots.getPoblacion().get(i).getBateria().getCarga()>0) {
                 if (this.fabricaRobots.getPoblacion().get(i).isFinalizado()){ 
                     break;

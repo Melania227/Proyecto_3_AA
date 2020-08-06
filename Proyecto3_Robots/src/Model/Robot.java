@@ -3,6 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+/*
+ * EN CLASE ROBOT
+ */
 package Model;
 
 import java.io.Serializable;
@@ -117,6 +120,32 @@ public class Robot implements Serializable{
         this.pos[0]=x;
         this.pos[1]=y;
     }
+
+    public ArrayList<int[]> getCadenaMarkov() {
+        return cadenaMarkov;
+    }
+
+    public void setCadenaMarkov(ArrayList<int[]> cadenaMarkov) {
+        this.cadenaMarkov = cadenaMarkov;
+    }
+
+    public ArrayList<String> getPosiblesMovimientos() {
+        return posiblesMovimientos;
+    }
+
+    public void setPosiblesMovimientos(ArrayList<String> posiblesMovimientos) {
+        this.posiblesMovimientos = posiblesMovimientos;
+    }
+
+    public ArrayList<int[]> getCasillasVisitadas() {
+        return casillasVisitadas;
+    }
+
+    public void setCasillasVisitadas(ArrayList<int[]> casillasVisitadas) {
+        this.casillasVisitadas = casillasVisitadas;
+    }
+    
+    
         
     public Bateria getBateriaByGenes (){
         int num = this.genes.generarValor(1);
@@ -364,33 +393,33 @@ public class Robot implements Serializable{
             case 1:
                 switch (tipoTerreno) {
                     case NORMAL:
-                        return 10.0;
+                        return 80.0;
                     case MODERADO:
-                        return 3.0;
+                        return 20.0;
                     case DIFICIL:
-                        return 2.0;
+                        return 10.0;
                     default:
                         return 0.0;
                 }
             case 2:
                 switch (tipoTerreno) {
                     case NORMAL:
-                        return 10.0;
+                        return 80.0;
                     case MODERADO:
-                        return 9.0;
+                        return 70.0;
                     case DIFICIL:
-                        return 3.0;
+                        return 10.0;
                     default:
                         return 0.0;
                 }
             case 3:
                 switch (tipoTerreno) {
                     case NORMAL:
-                        return 10.0;
+                        return 80.0;
                     case MODERADO:
-                        return 9.0;
+                        return 70.0;
                     case DIFICIL:
-                        return 8.0;
+                        return 60.0;
                     default:
                         return 0.0;
                 }
@@ -554,7 +583,7 @@ public class Robot implements Serializable{
             this.pos[1]= arreglo[1];
         }
         if (this.pos[0]==0 && this.pos[1]==this.terreno.getSizeTerreno()-1){
-            finalizado = true;
+            this.finalizado = true;
         }
     }
 }

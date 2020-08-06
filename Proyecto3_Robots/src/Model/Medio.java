@@ -55,23 +55,24 @@ public class Medio implements Serializable{
     
     public void start (){
         int llegaron = 0;
+        int [] posInicial= new int [2];
+        posInicial[0]=this.terreno.getSizeTerreno()-1;
+        posInicial[1]=0;
         for (int i = 0; i < this.fabricaRobots.getPoblacion().size(); i++) {
-            for (int j = 0; j < 1000; j++) {
-                if (this.fabricaRobots.getPoblacion().get(i).isFinalizado()) break;
+            //this.fabricaRobots.getPoblacion().get(i).setFinalizado(false);
+           // this.fabricaRobots.getPoblacion().get(i).setPos(posInicial[0], posInicial[1]);
+           // this.fabricaRobots.getPoblacion().get(i).getBateria().resetCarga();
+            while(this.fabricaRobots.getPoblacion().get(i).getBateria().getCarga()>0) {
+                if (this.fabricaRobots.getPoblacion().get(i).isFinalizado()){ 
+                    break;
+                }
                 this.fabricaRobots.getPoblacion().get(i).moverEnTerreno();
-                if (this.fabricaRobots.getPoblacion().get(i).isFinalizado()) llegaron++;
+                if (this.fabricaRobots.getPoblacion().get(i).isFinalizado()){ 
+                    llegaron++;
+                }
+                this.fabricaRobots.getPoblacion().get(i).getBateria().disminuirCarga();
             }
-//            int [][] tableroTemp = new int [this.terreno.getSizeTerreno()][this.terreno.getSizeTerreno()];
-//            tableroTemp[this.fabricaRobots.getPoblacion().get(i).getPos()[0]][this.fabricaRobots.getPoblacion().get(i).getPos()[1]] = 7;
-//            String strBoard = "";
-//            for (int k = 0; k < tableroTemp.length; k++) {
-//                String line = "";
-//                for (int l = 0; l < tableroTemp[0].length; l++) {
-//                    line+=tableroTemp[k][l]+" ";
-//                }
-//                strBoard+=line+"\n";
-//            }
-//            System.out.println(strBoard);
+            //System.out.println("---- " + this.fabricaRobots.getPoblacion().get(i).getBateria().getCarga() + " " + this.fabricaRobots.getPoblacion().get(i).getCamara().getTipo()+ " " + this.fabricaRobots.getPoblacion().get(i).getMotor().getTipo() + " " + this.fabricaRobots.getPoblacion().get(i).getPos()[0] + ", " + this.fabricaRobots.getPoblacion().get(i).getPos()[1] + " " + this.fabricaRobots.getPoblacion().get(i).isFinalizado());
         }
         System.out.println("LLEGARON SOLO: " + llegaron);
     }

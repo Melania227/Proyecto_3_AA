@@ -112,6 +112,11 @@ public class Robot implements Serializable{
     public void setPos(int[] pos) {
         this.pos = pos;
     }
+    
+    public void setPos(int x, int y) {
+        this.pos[0]=x;
+        this.pos[1]=y;
+    }
         
     public Bateria getBateriaByGenes (){
         int num = this.genes.generarValor(1);
@@ -171,21 +176,7 @@ public class Robot implements Serializable{
         if (!yaVisitado(posTempComp[0], posTempComp[1])){
             casillasVisitadas.add(this.pos);
         }
-        
-//        for (int i = 0; i < this.casillasVisitadas.size(); i++) {
-//            System.out.println("TENGO: " + this.casillasVisitadas.get(i)[0] + ", " + this.casillasVisitadas.get(i)[1]);
-//        }
-
-//        TipoTerreno tipoTerreno = this.terreno.getMatrizTerreno()[this.pos[0]][this.pos[1]];
-//        if (tipoTerreno==tipoTerreno.BLOQUEADO){
-//            System.out.println("ME QUEDO");
-//            return this.pos;
-//        }
         validarMovimientoPorPosicion();
-//        for (int i = 0; i < this.posiblesMovimientos.size(); i++) {
-//            System.out.println("IR A: " + this.posiblesMovimientos.get(i));
-//        }
-        
         int posX = this.cadenaMarkov.get(0)[0];
         int posY = this.cadenaMarkov.get(0)[1];
         
@@ -231,25 +222,17 @@ public class Robot implements Serializable{
             }
         }
         
-//        System.out.println("CAMARA: " + this.camara.getTipo());
-//        System.out.println("MOTOR: " + this.motor.getTipo());
-        
         String movimiento =  obtenerMovimiento(porcentajeArriba, porcentajeAbajo, porcentajeDerecha, porcentajeIzquierda);
         switch(movimiento){
             case "Arriba":
-               // System.out.println("ELIJO ARRIBA: "+ this.cadenaMarkov.get(0)[0] + ", "+ this.cadenaMarkov.get(0)[1]);
                 return this.cadenaMarkov.get(0);
             case "Abajo":
-              //  System.out.println("ELIJO ABAJO: "+ this.cadenaMarkov.get(1)[0] + ", "+ this.cadenaMarkov.get(1)[1]);
                 return this.cadenaMarkov.get(1); 
             case "Derecha":
-              //  System.out.println("ELIJO DERECHA: "+ this.cadenaMarkov.get(2)[0] + ", "+ this.cadenaMarkov.get(2)[1]);
                 return this.cadenaMarkov.get(2);
             case "Izquierda":
-             //   System.out.println("ELIJO IZQUIERDA: "+ this.cadenaMarkov.get(3)[0] + ", "+ this.cadenaMarkov.get(3)[1]);
                 return this.cadenaMarkov.get(3);
             default:
-              //  System.out.println("ME QUEDO");
                 return this.pos;
         }
     }
@@ -271,6 +254,10 @@ public class Robot implements Serializable{
         porcentajeAbajo = ((porcentajeAbajo+1.0) * 100)/porcentajeTotal;
         porcentajeDerecha = ((porcentajeDerecha+1.0) * 100)/porcentajeTotal;
         porcentajeIzquierda = ((porcentajeIzquierda+1.0) * 100)/porcentajeTotal;
+//        System.out.println("ARRIBA: " + porcentajeArriba);
+//        System.out.println("ABAJO: " + porcentajeAbajo);
+//        System.out.println("DERECHA: " + porcentajeDerecha);
+//        System.out.println("IZQUIERDA: " + porcentajeIzquierda);
         Random rand = new Random ();
         int porcentajeRandom = rand.nextInt(100);
         if (porcentajeRandom < porcentajeArriba){
@@ -377,33 +364,33 @@ public class Robot implements Serializable{
             case 1:
                 switch (tipoTerreno) {
                     case NORMAL:
-                        return 100.0;
+                        return 10.0;
                     case MODERADO:
-                        return 30.0;
+                        return 3.0;
                     case DIFICIL:
-                        return 20.0;
+                        return 2.0;
                     default:
                         return 0.0;
                 }
             case 2:
                 switch (tipoTerreno) {
                     case NORMAL:
-                        return 100.0;
+                        return 10.0;
                     case MODERADO:
-                        return 90.0;
+                        return 9.0;
                     case DIFICIL:
-                        return 30.0;
+                        return 3.0;
                     default:
                         return 0.0;
                 }
             case 3:
                 switch (tipoTerreno) {
                     case NORMAL:
-                        return 100.0;
+                        return 10.0;
                     case MODERADO:
-                        return 90.0;
+                        return 9.0;
                     case DIFICIL:
-                        return 80.0;
+                        return 8.0;
                     default:
                         return 0.0;
                 }
@@ -422,30 +409,20 @@ public class Robot implements Serializable{
         int cantPorcentajesValidos = 0;
         switch (tipoCamara) {
             case 1:
-//                System.out.println("Porcentaje: " + porcentajeMotor(tipoTerreno));
                 return porcentajeMotor(tipoTerreno);
             case 2:
                 tipoTerreno_1 = getTipoTerreno(numEstado, fila, columna, 1);
-//                System.out.println("NUM ESTADO: " + numEstado);
-//                System.out.println("TIPO DE TERRENO ES: " + tipoTerreno);
-//                System.out.println("TIPO DE TERRENO ES 2: " + tipoTerreno_1);
                 porcentaje1 = porcentajeMotor(tipoTerreno);
                 porcentaje2 = porcentajeMotor(tipoTerreno_1);
                 cantPorcentajesValidos = getPorcentajesValidos(porcentaje1, porcentaje2, 0.0);
-//                System.out.println("Porcentaje: " + porcentaje1 + " + " + porcentaje2);
                 return (porcentaje1 + porcentaje2)/cantPorcentajesValidos;
             case 3:
-//                System.out.println("NUM ESTADO: " + numEstado);
                 tipoTerreno_1 = getTipoTerreno(numEstado, fila, columna, 1);
                 tipoTerreno_2 = getTipoTerreno(numEstado, fila, columna, 2);
-//                System.out.println("TIPO DE TERRENO ES: " + tipoTerreno);
-//                System.out.println("TIPO DE TERRENO ES 2: " + tipoTerreno_1);
-//                System.out.println("TIPO DE TERRENO ES 3: " + tipoTerreno_2);
                 porcentaje1 = porcentajeMotor(tipoTerreno);
                 porcentaje2 = porcentajeMotor(tipoTerreno_1);
                 porcentaje3 = porcentajeMotor(tipoTerreno_2);
                 cantPorcentajesValidos = getPorcentajesValidos(porcentaje1, porcentaje2, porcentaje3);
-//                System.out.println("Porcentaje: " + porcentaje1 + " + " + porcentaje2 + " + " + porcentaje3);
                 return (porcentaje1 + porcentaje2 + porcentaje3)/cantPorcentajesValidos;
             default:
                 return 0.0;
@@ -469,30 +446,22 @@ public class Robot implements Serializable{
     public TipoTerreno getTipoTerreno(int numEstado, int fila, int columna, int numEspacios){
         switch (numEstado){
             case 0:
-                //System.out.println("COORDENADAS0*: " + (fila-numEspacios) + ", " + columna);
                 if ((fila-numEspacios)>=0){
-                    //System.out.println("COORDENADAS0: " + (fila-numEspacios) + ", " + columna);
                     return this.terreno.getMatrizTerreno()[fila-numEspacios][columna];
                 }
                 return TipoTerreno.BLOQUEADO;
             case 1:
-                //System.out.println("COORDENADAS1*: " + (fila+numEspacios) + ", " + columna);
                 if ((fila+numEspacios)<=this.terreno.getSizeTerreno()-1){
-                    //System.out.println("COORDENADAS1: " + (fila+numEspacios) + ", " + columna);
                     return this.terreno.getMatrizTerreno()[fila+numEspacios][columna];
                 }
                 return TipoTerreno.BLOQUEADO;
             case 2:
-                //System.out.println("COORDENADAS2*: " + fila + ", " + (columna+numEspacios));
                 if ((columna+numEspacios)<=this.terreno.getSizeTerreno()-1){
-                    //System.out.println("COORDENADAS2: " + fila + ", " + (columna+numEspacios));
                     return this.terreno.getMatrizTerreno()[fila][columna+numEspacios];
                 }
                 return TipoTerreno.BLOQUEADO;
             case 3:
-                //System.out.println("COORDENADAS3*: " + fila + ", " + (columna-numEspacios));
                 if ((columna-numEspacios)>=0){
-                    //System.out.println("COORDENADAS3: " + fila + ", " + (columna-numEspacios));
                     return this.terreno.getMatrizTerreno()[fila][columna-numEspacios];
                 }
                 return TipoTerreno.BLOQUEADO;
@@ -586,9 +555,6 @@ public class Robot implements Serializable{
         }
         if (this.pos[0]==0 && this.pos[1]==this.terreno.getSizeTerreno()-1){
             finalizado = true;
-        }
-        if (finalizado){
-            //System.out.println("FINALIZAMOS BROSQUI. ----------------------------------------");
         }
     }
 }

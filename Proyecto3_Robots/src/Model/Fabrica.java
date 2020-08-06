@@ -17,6 +17,7 @@ public class Fabrica implements Serializable{
     private ArrayList <Robot> poblacion;
     private int cantidadDeIndividuos;
     private int indiceMutacion;
+    private Terreno terreno;
     
     public Fabrica(int cantidadDeIndividuos, Terreno terreno) {
         Random rand = new Random();
@@ -26,12 +27,14 @@ public class Fabrica implements Serializable{
         for (int i = 0; i < cantidadDeIndividuos; i++) {
             this.poblacion.add(new Robot(terreno));
         }
+        this.terreno = terreno;
     }
     
-    public Fabrica(int cantidadDeIndividuos, int indiceMutacion) {
+    public Fabrica(int cantidadDeIndividuos, int indiceMutacion, Terreno terreno) {
         this.indiceMutacion = indiceMutacion;
         this.poblacion = new ArrayList ();
         this.cantidadDeIndividuos = cantidadDeIndividuos;
+        this.terreno = terreno;
     }
 
     public Fabrica(ArrayList<Robot> poblacion) {
@@ -86,14 +89,14 @@ public class Fabrica implements Serializable{
     }
     
     public Fabrica getNuevaGeneracion (){
-        Fabrica nuevaGeneracion = new Fabrica(this.cantidadDeIndividuos, this.indiceMutacion);
+        Fabrica nuevaGeneracion = new Fabrica(this.cantidadDeIndividuos, this.indiceMutacion, this.terreno);
         ArrayList<Double> calificacionesNormalizadas = getAdaptabilidad();
        
         ArrayList<Robot> seleccionRobots = new ArrayList ();
         Random rand = new Random();
         for (int i = 0; i < this.poblacion.size(); i++) {
-            double indice = rand.nextDouble();
-            System.out.println("INDICE " + indice);
+            double indice = rand.nextDouble()*100;
+            //System.out.println("INDICE " + indice);
             seleccionRobots.add(getRobotSeleccionado(calificacionesNormalizadas, indice));
         }
 
@@ -112,14 +115,14 @@ public class Fabrica implements Serializable{
                 calificaciones.add(100.0);
             }
             else {
-                calificaciones.add(10.0);
+                calificaciones.add(1.0);
             }
             total += calificaciones.get(i);
         }
-        System.out.println("total "+total);
+        //System.out.println("total "+total);
         for (int i = 0; i < calificaciones.size(); i++) {
             calificaciones.set(i, (double)((calificaciones.get(i)*100)/total));
-            System.out.println("CAL: " +  calificaciones.get(i));
+            //System.out.println("CAL: " +  calificaciones.get(i));
         }
         return calificaciones;
     }
@@ -140,6 +143,21 @@ public class Fabrica implements Serializable{
     public void cruceEntreIndividuosGen (){
         for (int i = 0; i < this.poblacion.size(); i=i+2) {
             this.poblacion.get(i).cruceEntreRobots(this.poblacion.get(i+1));
+        }
+    }
+    
+    public void getNuevasCaracteristicas(){
+        int [] posInicial= new int [2];
+        posInicial[0]=this.terreno.getSizeTerreno()-1;
+        posInicial[1]=0;
+        for (int i = 0; i < this.poblacion.size(); i++) {
+            this.poblacion.get(i).setBateria(this.poblacion.get(i).getBateriaByGenes());
+            this.poblacion.get(i).setCamara(this.poblacion.get(i).getCamaraByGenes());
+            this.poblacion.get(i).setMotor(this.poblacion.get(i).getMotorByGenes());
+            //this.poblacion.get(i).setPos(posInicial[0], posInicial[1]);
+            //this.poblacion.get(i).getBateria().resetCarga();
+            this.poblacion.get(i).setFinalizado(false);
+            //System.out.println("---- " + this.poblacion.get(i).getBateria().getCarga() + " " + this.poblacion.get(i).getCamara().getTipo()+ " " + this.poblacion.get(i).getMotor().getTipo() + " " + this.poblacion.get(i).getPos()[0] + ", " + this.poblacion.get(i).getPos()[1] + " " + this.poblacion.get(i).isFinalizado());
         }
     }
 }

@@ -26,19 +26,19 @@ public class Bateria implements Serializable{
         this.size = size;
         
         if (size == 1){
-            carga = 0;
+            carga = 600;
             costo = 0;
         }
         else if (size == 2){
-            carga = 0;
+            carga = 800;
             costo = 0;
         }
         else if (size == 3){
-            carga = 0;
+            carga = 1000;
             costo = 0;
         }
         else{
-            carga = 0;
+            carga = 300;
             costo = 0;
         } 
     }
@@ -67,5 +67,24 @@ public class Bateria implements Serializable{
         this.carga = carga;
     }
     
+    public void resetCarga (){
+        switch(this.size){
+            case 1:
+                this.carga = 600;
+            break;
+            case 2:
+                this.carga = 800;
+            break;
+            case 3:
+                this.carga = 1000;
+            break;
+            default:
+                this.carga = 500;
+        }
+    }
+    
+    public void disminuirCarga(){
+        this.carga = this.carga-1;
+    }
     
 }

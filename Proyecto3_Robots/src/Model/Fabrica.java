@@ -115,12 +115,18 @@ public class Fabrica implements Serializable{
         double total = 0.0;
         int casillasFaltantes;
         int numGanancia;
+        int hardware;
         for (int i = 0; i < this.poblacion.size(); i++) {
             //FALTA TOMAR EN CUENTA EL HARDWARE
+            hardware = 0;
+            hardware += this.poblacion.get(i).getBateria().getCosto()/100;
+            hardware += this.poblacion.get(i).getCamara().getCosto()/100;
+            hardware += this.poblacion.get(i).getMotor().getCosto()/100;
             casillasFaltantes = 0;
             casillasFaltantes+=(this.poblacion.get(i).getPos()[0]);
             casillasFaltantes+=(19-this.poblacion.get(i).getPos()[1]);
             numGanancia = 38 - casillasFaltantes; 
+            numGanancia+=hardware;
             numGanancia = (numGanancia+1)*100;
             calificaciones.add((double)numGanancia);
             total += calificaciones.get(i);

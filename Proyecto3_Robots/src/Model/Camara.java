@@ -29,20 +29,20 @@ public class Camara implements Serializable{
         this.tipo = tipo;
         
         if (tipo == 1){
-            consumo = 0;
-            costo = 0;
+            consumo = 50;
+            costo = 2;
         }
         else if (tipo == 2){
-            consumo = 0;
-            costo = 0;
+            consumo = 70;
+            costo = 3;
         }
         else if (tipo == 3){
-            consumo = 0;
-            costo = 0;
+            consumo = 100;
+            costo = 5;
         }
         else{
-            consumo = 0;
-            costo = 0;
+            consumo = 20;
+            costo = 1;
         } 
     }
 

@@ -29,26 +29,26 @@ public class Motor implements Serializable{
         this.tipoTerreno = new ArrayList();
         if (tipo == 1){
             tipoTerreno.add(TipoTerreno.NORMAL);
-            consumo = 0;
-            costo = 0;
+            consumo = 5;
+            costo = 5;
         }
         else if (tipo == 2){
             tipoTerreno.add(TipoTerreno.NORMAL);
             tipoTerreno.add(TipoTerreno.MODERADO);
-            consumo = 0;
-            costo = 0;
+            consumo = 7;
+            costo = 7;
         }
         else if (tipo == 3){
             tipoTerreno.add(TipoTerreno.NORMAL);
             tipoTerreno.add(TipoTerreno.MODERADO);
             tipoTerreno.add(TipoTerreno.DIFICIL);
-            consumo = 0;
-            costo = 0;
+            consumo = 10;
+            costo = 10;
         }
         else{
             tipoTerreno.add(TipoTerreno.NORMAL);
-            consumo = 0;
-            costo = 0;
+            consumo = 3;
+            costo = 3;
         }
     }
 

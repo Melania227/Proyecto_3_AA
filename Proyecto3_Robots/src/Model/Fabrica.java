@@ -113,17 +113,31 @@ public class Fabrica implements Serializable{
     public ArrayList<Double> getAdaptabilidad(){
         ArrayList<Double> calificaciones = new ArrayList();
         double total = 0.0;
+        int casillasFaltantes;
+        int numGanancia;
         for (int i = 0; i < this.poblacion.size(); i++) {
-            if (this.poblacion.get(i).isFinalizado()){
-                calificaciones.add(100.0);
-            }
-            else {
-                calificaciones.add(50.0);
-            }
+            //FALTA TOMAR EN CUENTA EL HARDWARE
+            casillasFaltantes = 0;
+            casillasFaltantes+=(this.poblacion.get(i).getPos()[0]);
+            casillasFaltantes+=(19-this.poblacion.get(i).getPos()[1]);
+            numGanancia = 38 - casillasFaltantes; 
+            numGanancia = (numGanancia+1)*100;
+            calificaciones.add((double)numGanancia);
             total += calificaciones.get(i);
         }
         //System.out.println("total "+total);
+//        for (int i = 0; i < this.poblacion.size(); i++) {
+//            if (this.poblacion.get(i).isFinalizado()){
+//                calificaciones.add(100.0);
+//            }
+//            else {
+//                calificaciones.add(50.0);
+//            }
+//            total += calificaciones.get(i);
+//        }
+        //System.out.println("total "+total);
         for (int i = 0; i < calificaciones.size(); i++) {
+            //System.out.println("CAL: " +  calificaciones.get(i));
             calificaciones.set(i, (double)((calificaciones.get(i)*100)/total));
             //System.out.println("CAL: " +  calificaciones.get(i));
         }

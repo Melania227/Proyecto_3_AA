@@ -25,26 +25,13 @@ public class Proyecto3_Robots {
      */
     public static void main(String[] args) {
         Medio m = new Medio(200, 20);
-        System.out.println("Generacion original");
-        m.start();
-//        m.start();
-//        m.start();
-//        m.start();
-        System.out.println("Primera Generacion");
-        Fabrica f = m.getFabricaRobots().getNuevaGeneracion();
-        f.cruceEntreIndividuosGen();
-        f.getNuevasCaracteristicas();
-        m.setFabricaRobots(f);
         m.start();
         
-        for (int i = 2; i < 10; i++) {
-            System.err.println(i+" generacion");
-            f = m.getFabricaRobots().getNuevaGeneracion();
-            f.cruceEntreIndividuosGen();
-            f.getNuevasCaracteristicas();
-            m.setFabricaRobots(f);
+        //m.printGeneraciones();
+        
+        for (int i = 2; i < 100; i++) {
+            m.getNewGeneration();
             m.start();
-            
         }
 
 

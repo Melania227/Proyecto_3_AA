@@ -79,11 +79,27 @@ public class Medio implements Serializable{
             }
             //System.out.println("---- " + this.fabricaRobots.getPoblacion().get(i).getBateria().getCarga() + " " + this.fabricaRobots.getPoblacion().get(i).getCamara().getTipo()+ " " + this.fabricaRobots.getPoblacion().get(i).getMotor().getTipo() + " " + this.fabricaRobots.getPoblacion().get(i).getPos()[0] + ", " + this.fabricaRobots.getPoblacion().get(i).getPos()[1] + " " + this.fabricaRobots.getPoblacion().get(i).isFinalizado());
         }
+        this.historialGeneraciones.add(this.fabricaRobots);
         System.out.println("LLEGARON SOLO: " + llegaron);
     }
     
-//    public void newGeneration (){
-//        this.fabricaRobots.cruceEntreIndividuosGen();
-//    }
+    public void getNewGeneration (){
+        Fabrica f = this.fabricaRobots.getNuevaGeneracion();
+        f.cruceEntreIndividuosGen();
+        f.getNuevasCaracteristicas();
+        this.fabricaRobots = f;
+        //start();
+    }
     
+    public void printGeneraciones (){
+        for (int i = 0; i < this.historialGeneraciones.size(); i++) {
+            System.out.println("GENERACIÓN #" + i);
+            for (int j = 0; j < this.historialGeneraciones.get(i).getPoblacion().size(); j++) {
+                System.out.println("GENES ROBOT #" + j + ": " + this.historialGeneraciones.get(i).getPoblacion().get(j).getGenes().getChain());
+            }
+            
+        }
+    
+    }
+        
 }

@@ -432,10 +432,10 @@ public class Robot implements Serializable{
         int tipoCamara = this.camara.getTipo();
         TipoTerreno tipoTerreno_1;
         TipoTerreno tipoTerreno_2;
-        double porcentaje1 = 0.0;
-        double porcentaje2 = 0.0;
-        double porcentaje3 = 0.0;
-        int cantPorcentajesValidos = 0;
+        double porcentaje1;
+        double porcentaje2;
+        double porcentaje3;
+        int cantPorcentajesValidos;
         switch (tipoCamara) {
             case 1:
                 return porcentajeMotor(tipoTerreno);

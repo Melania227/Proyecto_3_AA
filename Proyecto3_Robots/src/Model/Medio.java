@@ -82,7 +82,7 @@ public class Medio implements Serializable{
             }
         }
         this.historialGeneraciones.add(this.fabricaRobots);
-        System.out.println("LLEGARON SOLO: " + llegaron);
+        //System.out.println("LLEGARON SOLO: " + llegaron);
     }
     
     public void getNewGeneration (){

@@ -36,10 +36,20 @@ public class RobotsInfo extends javax.swing.JFrame {
         Predecesor_2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         Predecesor_1 = new javax.swing.JButton();
+        Bateria_3 = new javax.swing.JLabel();
         Estado_Txt = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        Bateria_2 = new javax.swing.JLabel();
+        Bateria_1 = new javax.swing.JLabel();
+        Motor_3 = new javax.swing.JLabel();
+        Motor_1 = new javax.swing.JLabel();
+        Motor_2 = new javax.swing.JLabel();
+        Cam_1 = new javax.swing.JLabel();
+        Cam_2 = new javax.swing.JLabel();
+        Cam_3 = new javax.swing.JLabel();
+        Jpanel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 15, 34));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -72,12 +82,58 @@ public class RobotsInfo extends javax.swing.JFrame {
         Predecesor_1.setBorderPainted(false);
         jPanel1.add(Predecesor_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 600, 170, 90));
 
-        Estado_Txt.setFont(new java.awt.Font("Lucida Fax", 0, 18)); // NOI18N
+        Bateria_3.setFont(new java.awt.Font("Lucida Fax", 0, 25)); // NOI18N
+        Bateria_3.setForeground(new java.awt.Color(255, 255, 255));
+        Bateria_3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(Bateria_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 190, 50, 50));
+
+        Estado_Txt.setFont(new java.awt.Font("Lucida Fax", 0, 30)); // NOI18N
         Estado_Txt.setForeground(new java.awt.Color(255, 255, 255));
+        Estado_Txt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(Estado_Txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 450, 190, 50));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/3.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, 930));
+        Bateria_2.setFont(new java.awt.Font("Lucida Fax", 0, 25)); // NOI18N
+        Bateria_2.setForeground(new java.awt.Color(255, 255, 255));
+        Bateria_2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(Bateria_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 50, 50));
+
+        Bateria_1.setFont(new java.awt.Font("Lucida Fax", 0, 25)); // NOI18N
+        Bateria_1.setForeground(new java.awt.Color(255, 255, 255));
+        Bateria_1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(Bateria_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 50, 50));
+
+        Motor_3.setFont(new java.awt.Font("Lucida Fax", 0, 25)); // NOI18N
+        Motor_3.setForeground(new java.awt.Color(255, 255, 255));
+        Motor_3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(Motor_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 50, 50, 50));
+
+        Motor_1.setFont(new java.awt.Font("Lucida Fax", 0, 25)); // NOI18N
+        Motor_1.setForeground(new java.awt.Color(255, 255, 255));
+        Motor_1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(Motor_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 50, 50));
+
+        Motor_2.setFont(new java.awt.Font("Lucida Fax", 0, 25)); // NOI18N
+        Motor_2.setForeground(new java.awt.Color(255, 255, 255));
+        Motor_2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(Motor_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, 50, 50));
+
+        Cam_1.setFont(new java.awt.Font("Lucida Fax", 0, 25)); // NOI18N
+        Cam_1.setForeground(new java.awt.Color(255, 255, 255));
+        Cam_1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(Cam_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 50, 50));
+
+        Cam_2.setFont(new java.awt.Font("Lucida Fax", 0, 25)); // NOI18N
+        Cam_2.setForeground(new java.awt.Color(255, 255, 255));
+        Cam_2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(Cam_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, 50, 50));
+
+        Cam_3.setFont(new java.awt.Font("Lucida Fax", 0, 25)); // NOI18N
+        Cam_3.setForeground(new java.awt.Color(255, 255, 255));
+        Cam_3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(Cam_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 320, 50, 50));
+
+        Jpanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/3.png"))); // NOI18N
+        jPanel1.add(Jpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, 930));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,11 +185,20 @@ public class RobotsInfo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Bateria_1;
+    private javax.swing.JLabel Bateria_2;
+    private javax.swing.JLabel Bateria_3;
+    private javax.swing.JLabel Cam_1;
+    private javax.swing.JLabel Cam_2;
+    private javax.swing.JLabel Cam_3;
     private javax.swing.JLabel Estado_Txt;
     private javax.swing.JPanel Grid_Panel;
+    private javax.swing.JLabel Jpanel;
+    private javax.swing.JLabel Motor_1;
+    private javax.swing.JLabel Motor_2;
+    private javax.swing.JLabel Motor_3;
     private javax.swing.JButton Predecesor_1;
     private javax.swing.JButton Predecesor_2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
@@ -152,6 +217,46 @@ public class RobotsInfo extends javax.swing.JFrame {
 
     public JButton getPredecesor_1() {
         return Predecesor_1;
+    }
+
+    public JLabel getEstado_Txt() {
+        return Estado_Txt;
+    }
+
+    public JLabel getBateria_1() {
+        return Bateria_1;
+    }
+
+    public JLabel getBateria_2() {
+        return Bateria_2;
+    }
+
+    public JLabel getBateria_3() {
+        return Bateria_3;
+    }
+
+    public JLabel getCam_1() {
+        return Cam_1;
+    }
+
+    public JLabel getCam_2() {
+        return Cam_2;
+    }
+
+    public JLabel getCam_3() {
+        return Cam_3;
+    }
+
+    public JLabel getMotor_1() {
+        return Motor_1;
+    }
+
+    public JLabel getMotor_2() {
+        return Motor_2;
+    }
+
+    public JLabel getMotor_3() {
+        return Motor_3;
     }
     
 }

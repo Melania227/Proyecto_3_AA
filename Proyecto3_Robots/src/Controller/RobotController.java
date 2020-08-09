@@ -13,6 +13,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -35,16 +36,47 @@ public abstract class RobotController implements ActionListener{
     }
 
     private void _init_componentes() {
-        
+        this.ventana.getPredecesor_1().addActionListener(this);
+        this.ventana.getPredecesor_2().addActionListener(this);
     }
     
     @Override
     public void actionPerformed(ActionEvent event) {
+        if(event.getSource().equals(this.ventana.getPredecesor_1())){
+        }
+        if(event.getSource().equals(this.ventana.getPredecesor_1())){
+            
+        }
         
     }
 
     void start() {
+        //Titulo
         this.ventana.setTitle("Robot #"+this.numero+" - "+"Generación #"+this.gen);
+        //Estado
+        if (this.robot.isFinalizado()){ 
+            this.ventana.getEstado_Txt().setText("Finalizado");
+        }
+        else{
+            this.ventana.getEstado_Txt().setText("Inconcluso");
+        }
+        
+        //Bateria
+        this.ventana.getBateria_1().setText(String.valueOf(this.robot.getBateria().getSize()));
+        this.ventana.getBateria_2().setText(String.valueOf(this.robot.getBateria().getCarga()));
+        this.ventana.getBateria_3().setText(String.valueOf(this.robot.getBateria().getCosto()));
+        
+        //Cámara
+        this.ventana.getCam_1().setText(String.valueOf(this.robot.getCamara().getTipo()));
+        this.ventana.getCam_2().setText(String.valueOf(this.robot.getCamara().getConsumo()));
+        this.ventana.getCam_3().setText(String.valueOf(this.robot.getCamara().getCosto()));
+        
+        //Motor
+        this.ventana.getMotor_1().setText(String.valueOf(this.robot.getMotor().getTipo()));
+        this.ventana.getMotor_2().setText(String.valueOf(this.robot.getMotor().getConsumo()));
+        this.ventana.getMotor_3().setText(String.valueOf(this.robot.getMotor().getCosto()));
+        
+        //GENES
         ArrayList<Integer> lista = this.robot.getGenes().getChain();
         for(int num : lista){
             JLabel jLabel4 = new javax.swing.JLabel();
@@ -54,7 +86,7 @@ public abstract class RobotController implements ActionListener{
             this.ventana.getGenes_TXT().add(jLabel4);
         }
         
-       
+       //MATRIZ
         JPanel grid = this.ventana.getGrid_Panel();
         boolean bandera = false;
         for (int i = 0; i < this.robot.getTerreno().getSizeTerreno(); i++) {
@@ -70,7 +102,7 @@ public abstract class RobotController implements ActionListener{
                     for (int n = 0; n < this.robot.getCasillasVisitadas().size(); n++) {
                         if (this.robot.getCasillasVisitadas().get(n)[0] == i && this.robot.getCasillasVisitadas().get(n)[1] == j){
                             bandera = true;
-                            System.out.println(this.robot.getCasillasVisitadas().get(n)[0]);
+                            //System.out.println(this.robot.getCasillasVisitadas().get(n)[0]);
                         }
                     }
                     if(null != t)

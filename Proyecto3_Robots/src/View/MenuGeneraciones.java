@@ -5,7 +5,9 @@
  */
 package View;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 
@@ -44,6 +46,8 @@ public class MenuGeneraciones extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Busqueda de robots");
+        setResizable(false);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -148,6 +152,7 @@ public class MenuGeneraciones extends javax.swing.JFrame {
                 new MenuGeneraciones().setVisible(true);
             }
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

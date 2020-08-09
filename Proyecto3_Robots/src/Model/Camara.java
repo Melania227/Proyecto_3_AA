@@ -8,7 +8,7 @@ package Model;
 import java.io.Serializable;
 
 /**
- *
+ * CLASE CAMARA
  * @author USUARIO
  */
 public class Camara implements Serializable{
@@ -29,20 +29,20 @@ public class Camara implements Serializable{
         this.tipo = tipo;
         
         if (tipo == 1){
-            consumo = 50;
-            costo = 2;
+            consumo = 1;
+            costo = 20;
         }
         else if (tipo == 2){
-            consumo = 70;
-            costo = 3;
+            consumo = 2;
+            costo = 30;
         }
         else if (tipo == 3){
-            consumo = 100;
-            costo = 5;
+            consumo = 3;
+            costo = 50;
         }
         else{
-            consumo = 20;
-            costo = 1;
+            consumo = 1;
+            costo = 50;
         } 
     }
 
@@ -78,5 +78,7 @@ public class Camara implements Serializable{
         this.espacioXVer = espacioXVer;
     }
     
-    
+    public int getCostoAdaptabilidad() {
+        return 100 - this.costo;
+    }
 }

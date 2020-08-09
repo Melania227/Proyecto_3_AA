@@ -9,10 +9,14 @@
  */
 package proyecto3_robots;
 
+import Controller.Controller;
 import Model.Fabrica;
 import Model.Medio;
 import Model.Robot;
 import Model.Terreno;
+import Model.TipoTerreno;
+import View.RobotsInfo;
+
 
 /**
  *
@@ -24,17 +28,10 @@ public class Proyecto3_Robots {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Medio m = new Medio(200, 20);
-        m.start();
-        
-        //m.printGeneraciones();
-        
-        for (int i = 2; i < 100; i++) {
-            m.getNewGeneration();
-            m.start();
-        }
-
-
+        Controller controller = new Controller() {};
+        controller.start();
+       
     }
     
 }
+

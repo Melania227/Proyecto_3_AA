@@ -1,11 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/*
- * EN CLASE ROBOT
- */
 package Model;
 
 import java.io.Serializable;
@@ -27,6 +19,10 @@ public class Robot implements Serializable{
     private ArrayList <String> posiblesMovimientos;
     private ArrayList <int[]> casillasVisitadas; 
     private boolean finalizado;
+    private double puntajeAdaptabilidad;
+    private int[] datosPadre1;
+    private int[] datosPadre2;
+    private int numGeneracion;
     
     public Robot (Terreno terreno){
         this.terreno = terreno;
@@ -50,8 +46,10 @@ public class Robot implements Serializable{
         posTemp[1]=this.pos[1];
         this.casillasVisitadas.add(posTemp);
         this.finalizado = false;
-        //System.out.println("CAMARA: " + this.camara.getTipo());
-        //System.out.println("MOTOR: " + this.motor.getTipo());
+        this.puntajeAdaptabilidad = 0;
+        this.datosPadre1= new int [2];
+        this.datosPadre2= new int [2];
+        this.numGeneracion = 0;
     }
 
     public Robot(Camara camara, Bateria bateria, Motor motor) {
@@ -144,9 +142,50 @@ public class Robot implements Serializable{
     public void setCasillasVisitadas(ArrayList<int[]> casillasVisitadas) {
         this.casillasVisitadas = casillasVisitadas;
     }
+
+    public double getPuntajeAdaptabilidad() {
+        return puntajeAdaptabilidad;
+    }
+
+    public void setPuntajeAdaptabilidad(double puntajeAdaptabilidad) {
+        this.puntajeAdaptabilidad = puntajeAdaptabilidad;
+    }
+
+    public int[] getDatosPadre1() {
+        return datosPadre1;
+    }
+
+    public void setDatosPadre1(int numGen, int numPoblacion) {
+        this.datosPadre1[0]=numGen;
+        this.datosPadre1[1]=numPoblacion;
+    }
     
+    public void setDatosPadre1(int[] datosPadre1) {
+        this.datosPadre1 = datosPadre1;
+    }
+
+    public int[] getDatosPadre2() {
+        return datosPadre2;
+    }
+
+    public void setDatosPadre2(int numGen, int numPoblacion) {
+        this.datosPadre2[0]=numGen;
+        this.datosPadre2[1]=numPoblacion;
+    }
     
-        
+    public void setDatosPadre2(int[] datosPadre2) {
+        this.datosPadre2 = datosPadre2;
+    }
+
+    public int getNumGeneracion() {
+        return numGeneracion;
+    }
+
+    public void setNumGeneracion(int numGeneracion) {
+        this.numGeneracion = numGeneracion;
+    }
+
+    
     public Bateria getBateriaByGenes (){
         int num = this.genes.generarValor(1);
         double porcentaje = (double)num/(double)256;
@@ -283,10 +322,6 @@ public class Robot implements Serializable{
         porcentajeAbajo = ((porcentajeAbajo+1.0) * 100)/porcentajeTotal;
         porcentajeDerecha = ((porcentajeDerecha+1.0) * 100)/porcentajeTotal;
         porcentajeIzquierda = ((porcentajeIzquierda+1.0) * 100)/porcentajeTotal;
-//        System.out.println("ARRIBA: " + porcentajeArriba);
-//        System.out.println("ABAJO: " + porcentajeAbajo);
-//        System.out.println("DERECHA: " + porcentajeDerecha);
-//        System.out.println("IZQUIERDA: " + porcentajeIzquierda);
         Random rand = new Random ();
         int porcentajeRandom = rand.nextInt(100);
         if (porcentajeRandom < porcentajeArriba){
@@ -561,17 +596,30 @@ public class Robot implements Serializable{
         arreglo[1] = this.pos[1];
         switch(this.motor.getTipo()){
             case 1:
-                if(this.terreno.getMatrizTerreno()[this.pos[0]][this.pos[1]]== TipoTerreno.NORMAL)
+                if(this.terreno.getMatrizTerreno()[this.pos[0]][this.pos[1]]== TipoTerreno.NORMAL){
+                    disminuirCargaEnBateria(0);
                     this.pos = comportamiento();
+                }
                 break;
             case 2:
-                if(this.terreno.getMatrizTerreno()[this.pos[0]][this.pos[1]]== TipoTerreno.NORMAL)
+                if(this.terreno.getMatrizTerreno()[this.pos[0]][this.pos[1]]== TipoTerreno.NORMAL){
+                    disminuirCargaEnBateria(0);
                     this.pos = comportamiento();
-                else if(this.terreno.getMatrizTerreno()[this.pos[0]][this.pos[1]]== TipoTerreno.MODERADO)
+                }
+                else if(this.terreno.getMatrizTerreno()[this.pos[0]][this.pos[1]]== TipoTerreno.MODERADO){
+                    disminuirCargaEnBateria(1);
                     this.pos = comportamiento();
+                }
                 break;
             case 3:
                 if (this.terreno.getMatrizTerreno()[this.pos[0]][this.pos[1]] != TipoTerreno.BLOQUEADO){
+                    if(this.terreno.getMatrizTerreno()[this.pos[0]][this.pos[1]]== TipoTerreno.NORMAL){
+                        disminuirCargaEnBateria(0);
+                    }
+                    else if(this.terreno.getMatrizTerreno()[this.pos[0]][this.pos[1]]== TipoTerreno.MODERADO){
+                        disminuirCargaEnBateria(1);
+                    }
+                    disminuirCargaEnBateria(2);
                     this.pos = comportamiento();
                 }
                 break;
@@ -585,5 +633,12 @@ public class Robot implements Serializable{
         if (this.pos[0]==0 && this.pos[1]==this.terreno.getSizeTerreno()-1){
             this.finalizado = true;
         }
+    }
+    
+    public void disminuirCargaEnBateria(int gastoTerreno){
+        int consumo = 0;
+        consumo+=this.camara.getTipo();
+        consumo+=gastoTerreno;
+        this.bateria.setCarga(this.bateria.getCarga()-consumo);
     }
 }

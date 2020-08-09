@@ -30,19 +30,19 @@ public class Bateria implements Serializable{
         
         if (size == 1){
             carga = 600;
-            costo = 0;
+            costo = 150;
         }
         else if (size == 2){
             carga = 800;
-            costo = 0;
+            costo = 250;
         }
         else if (size == 3){
             carga = 1000;
-            costo = 0;
+            costo = 350;
         }
         else{
-            carga = 300;
-            costo = 0;
+            carga = 600;
+            costo = 150;
         } 
     }
 
@@ -89,5 +89,9 @@ public class Bateria implements Serializable{
     public void disminuirCarga(){
         this.carga = this.carga-1;
     }
-    
+
+    public int getCostoAdaptabilidad() {
+        return 700 - this.costo;
+    }
 }
+

@@ -21,6 +21,7 @@ public class Fabrica implements Serializable{
     private int cantidadDeIndividuos;
     private int indiceMutacion;
     private Terreno terreno;
+    private int numGeneracion;
     
     public Fabrica(int cantidadDeIndividuos, Terreno terreno) {
         Random rand = new Random();
@@ -31,6 +32,7 @@ public class Fabrica implements Serializable{
             this.poblacion.add(new Robot(terreno));
         }
         this.terreno = terreno;
+        this.numGeneracion = 0;
     }
     
     public Fabrica(int cantidadDeIndividuos, int indiceMutacion, Terreno terreno) {
@@ -40,6 +42,32 @@ public class Fabrica implements Serializable{
         this.terreno = terreno;
     }
 
+    public int getIndiceMutacion() {
+        return indiceMutacion;
+    }
+
+    public void setIndiceMutacion(int indiceMutacion) {
+        this.indiceMutacion = indiceMutacion;
+    }
+
+    public Terreno getTerreno() {
+        return terreno;
+    }
+
+    public void setTerreno(Terreno terreno) {
+        this.terreno = terreno;
+    }
+
+    public int getNumGeneracion() {
+        return numGeneracion;
+    }
+
+    public void setNumGeneracion(int numGeneracion) {
+        this.numGeneracion = numGeneracion;
+    }
+
+    
+    
     public Fabrica(ArrayList<Robot> poblacion) {
         this.poblacion = poblacion;
     }
@@ -65,7 +93,6 @@ public class Fabrica implements Serializable{
         Random rand = new Random();
         int i = rand.nextInt(this.cantidadDeIndividuos);
         int j = rand.nextInt(56);
-        //System.out.println("CAMBIA: " + this.indiceMutacion);
         for (int m = 0; m < this.indiceMutacion; m++) {
             if (this.poblacion.get(i).getGenes().getChain().get(j) == 1){
                 this.poblacion.get(i).getGenes().getChain().set(j, 0);
@@ -73,7 +100,6 @@ public class Fabrica implements Serializable{
             else{
                 this.poblacion.get(i).getGenes().getChain().set(j, 1);
             }
-            //System.out.println("INDICE: "+ i + ", " + j);
             i = rand.nextInt(this.cantidadDeIndividuos);
             j = rand.nextInt(56);
         }
@@ -99,12 +125,13 @@ public class Fabrica implements Serializable{
         Random rand = new Random();
         for (int i = 0; i < this.poblacion.size(); i++) {
             double indice = rand.nextDouble()*100;
-            //System.out.println("INDICE " + indice);
             seleccionRobots.add(getRobotSeleccionado(calificacionesNormalizadas, indice));
         }
-
+        
         for (int i = 0; i < seleccionRobots.size(); i++) {
-            nuevaGeneracion.poblacion.add( (Robot) Clonador.deepCopy(seleccionRobots.get(i)));
+            Robot nuevoRobot = (Robot) Clonador.deepCopy(seleccionRobots.get(i));
+            nuevoRobot.setDatosPadre1(numGeneracion, i);
+            nuevaGeneracion.poblacion.add(nuevoRobot);
         }
         
         return nuevaGeneracion;
@@ -114,38 +141,29 @@ public class Fabrica implements Serializable{
         ArrayList<Double> calificaciones = new ArrayList();
         double total = 0.0;
         int casillasFaltantes;
-        int numGanancia;
-        int hardware;
+        double numGanancia;
+        double hardware;
         for (int i = 0; i < this.poblacion.size(); i++) {
-            //FALTA TOMAR EN CUENTA EL HARDWARE
             hardware = 0;
-            hardware += this.poblacion.get(i).getBateria().getCosto()/100;
-            hardware += this.poblacion.get(i).getCamara().getCosto()/100;
-            hardware += this.poblacion.get(i).getMotor().getCosto()/100;
+            hardware += this.poblacion.get(i).getBateria().getCostoAdaptabilidad()/10;
+            hardware += this.poblacion.get(i).getCamara().getCostoAdaptabilidad()/10;
+            hardware += this.poblacion.get(i).getMotor().getCostoAdaptabilidad()/10;
+            hardware += this.poblacion.get(i).getBateria().getCarga();
+            hardware += hardware/100;
             casillasFaltantes = 0;
             casillasFaltantes+=(this.poblacion.get(i).getPos()[0]);
             casillasFaltantes+=(19-this.poblacion.get(i).getPos()[1]);
             numGanancia = 38 - casillasFaltantes; 
+            numGanancia = numGanancia/1000;
             numGanancia+=hardware;
-            numGanancia = (numGanancia+1)*100;
-            calificaciones.add((double)numGanancia);
+            numGanancia = (numGanancia+1)*10;
+            calificaciones.add(numGanancia);
+            this.poblacion.get(i).setPuntajeAdaptabilidad(numGanancia);
+            //System.out.println("PUNTUACIÓN: " + numGanancia);
             total += calificaciones.get(i);
         }
-        //System.out.println("total "+total);
-//        for (int i = 0; i < this.poblacion.size(); i++) {
-//            if (this.poblacion.get(i).isFinalizado()){
-//                calificaciones.add(100.0);
-//            }
-//            else {
-//                calificaciones.add(50.0);
-//            }
-//            total += calificaciones.get(i);
-//        }
-        //System.out.println("total "+total);
         for (int i = 0; i < calificaciones.size(); i++) {
-            //System.out.println("CAL: " +  calificaciones.get(i));
             calificaciones.set(i, (double)((calificaciones.get(i)*100)/total));
-            //System.out.println("CAL: " +  calificaciones.get(i));
         }
         return calificaciones;
     }
@@ -166,6 +184,8 @@ public class Fabrica implements Serializable{
     public void cruceEntreIndividuosGen (){
         for (int i = 0; i < this.poblacion.size(); i=i+2) {
             this.poblacion.get(i).cruceEntreRobots(this.poblacion.get(i+1));
+            this.poblacion.get(i).setDatosPadre2(this.poblacion.get(i+1).getDatosPadre1());
+            this.poblacion.get(i+1).setDatosPadre2(this.poblacion.get(i).getDatosPadre1());
         }
     }
     
@@ -182,7 +202,7 @@ public class Fabrica implements Serializable{
             this.poblacion.get(i).setFinalizado(false);
             this.poblacion.get(i).setCasillasVisitadas(new ArrayList());
             this.poblacion.get(i).setPosiblesMovimientos(new ArrayList());
-            //System.out.println("---- " + this.poblacion.get(i).getBateria().getCarga() + " " + this.poblacion.get(i).getCamara().getTipo()+ " " + this.poblacion.get(i).getMotor().getTipo() + " " + this.poblacion.get(i).getPos()[0] + ", " + this.poblacion.get(i).getPos()[1] + " " + this.poblacion.get(i).isFinalizado());
+            this.poblacion.get(i).setPuntajeAdaptabilidad(0);
         }
     }
 }

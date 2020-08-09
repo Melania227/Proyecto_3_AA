@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- *
+ * CLASE MOTOR
  * @author USUARIO
  */
 public class Motor implements Serializable{
@@ -29,26 +30,26 @@ public class Motor implements Serializable{
         this.tipoTerreno = new ArrayList();
         if (tipo == 1){
             tipoTerreno.add(TipoTerreno.NORMAL);
-            consumo = 5;
-            costo = 5;
+            consumo = 1;
+            costo = 50;
         }
         else if (tipo == 2){
             tipoTerreno.add(TipoTerreno.NORMAL);
             tipoTerreno.add(TipoTerreno.MODERADO);
-            consumo = 7;
-            costo = 7;
+            consumo = 1;
+            costo = 70;
         }
         else if (tipo == 3){
             tipoTerreno.add(TipoTerreno.NORMAL);
             tipoTerreno.add(TipoTerreno.MODERADO);
             tipoTerreno.add(TipoTerreno.DIFICIL);
-            consumo = 10;
-            costo = 10;
+            consumo = 1;
+            costo = 100;
         }
         else{
             tipoTerreno.add(TipoTerreno.NORMAL);
-            consumo = 3;
-            costo = 3;
+            consumo = 1;
+            costo = 50;
         }
     }
 
@@ -84,5 +85,7 @@ public class Motor implements Serializable{
         this.costo = costo;
     }
     
-    
+    public int getCostoAdaptabilidad() {
+        return 220 - this.costo;
+    }
 }

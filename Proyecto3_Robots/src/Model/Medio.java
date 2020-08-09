@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -19,12 +20,14 @@ public class Medio implements Serializable{
     private Fabrica fabricaRobots;
     private Terreno terreno;
     private ArrayList <Fabrica> historialGeneraciones;
+    private int numGeneracionActual;
 
     public Medio(int cantRobots, int sizeTerreno) {
         this.terreno = new Terreno (sizeTerreno);
         this.fabricaRobots = new Fabrica(cantRobots, this.terreno);
         this.historialGeneraciones = new ArrayList ();
         this.historialGeneraciones.add(this.fabricaRobots);
+        this.numGeneracionActual = 0;
     }
     
     public Medio(Fabrica fabricaRobots, Terreno terreno) {
@@ -77,7 +80,6 @@ public class Medio implements Serializable{
                 }
                 this.fabricaRobots.getPoblacion().get(i).getBateria().disminuirCarga();
             }
-            //System.out.println("---- " + this.fabricaRobots.getPoblacion().get(i).getBateria().getCarga() + " " + this.fabricaRobots.getPoblacion().get(i).getCamara().getTipo()+ " " + this.fabricaRobots.getPoblacion().get(i).getMotor().getTipo() + " " + this.fabricaRobots.getPoblacion().get(i).getPos()[0] + ", " + this.fabricaRobots.getPoblacion().get(i).getPos()[1] + " " + this.fabricaRobots.getPoblacion().get(i).isFinalizado());
         }
         this.historialGeneraciones.add(this.fabricaRobots);
         System.out.println("LLEGARON SOLO: " + llegaron);
@@ -85,8 +87,10 @@ public class Medio implements Serializable{
     
     public void getNewGeneration (){
         Fabrica f = this.fabricaRobots.getNuevaGeneracion();
+        this.numGeneracionActual = this.numGeneracionActual +1;
         f.cruceEntreIndividuosGen();
         f.getNuevasCaracteristicas();
+        f.setNumGeneracion(this.numGeneracionActual);
         this.fabricaRobots = f;
         //start();
     }
@@ -97,9 +101,6 @@ public class Medio implements Serializable{
             for (int j = 0; j < this.historialGeneraciones.get(i).getPoblacion().size(); j++) {
                 System.out.println("GENES ROBOT #" + j + ": " + this.historialGeneraciones.get(i).getPoblacion().get(j).getGenes().getChain());
             }
-            
         }
-    
     }
-        
 }

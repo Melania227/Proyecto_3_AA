@@ -33,9 +33,10 @@ public class RobotsInfo extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         Grid_Panel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        Predecesor_2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        Predecesor_1 = new javax.swing.JButton();
+        Estado_Txt = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -49,20 +50,31 @@ public class RobotsInfo extends javax.swing.JFrame {
         Grid_Panel.setLayout(new java.awt.GridLayout(20, 20));
         jPanel1.add(Grid_Panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 20, 950, 950));
 
-        jButton1.setBackground(new java.awt.Color(153, 153, 255));
-        jButton1.setFont(new java.awt.Font("Lucida Fax", 1, 24)); // NOI18N
-        jButton1.setText("Buscar");
-        jButton1.setToolTipText("");
-        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton1.setBorderPainted(false);
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 600, 140, 70));
-
-        jButton2.setText("jButton1");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 800, 140, 70));
+        Predecesor_2.setBackground(new java.awt.Color(255, 255, 255));
+        Predecesor_2.setFont(new java.awt.Font("Lucida Fax", 1, 24)); // NOI18N
+        Predecesor_2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/chip.png"))); // NOI18N
+        Predecesor_2.setText("Buscar");
+        Predecesor_2.setToolTipText("");
+        Predecesor_2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Predecesor_2.setBorderPainted(false);
+        jPanel1.add(Predecesor_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 790, 170, 90));
 
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new java.awt.GridLayout(56, 0, 0, 2));
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 20, 710));
+
+        Predecesor_1.setBackground(new java.awt.Color(255, 255, 255));
+        Predecesor_1.setFont(new java.awt.Font("Lucida Fax", 1, 24)); // NOI18N
+        Predecesor_1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/robot.png"))); // NOI18N
+        Predecesor_1.setText("Buscar");
+        Predecesor_1.setToolTipText("");
+        Predecesor_1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Predecesor_1.setBorderPainted(false);
+        jPanel1.add(Predecesor_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 600, 170, 90));
+
+        Estado_Txt.setFont(new java.awt.Font("Lucida Fax", 0, 18)); // NOI18N
+        Estado_Txt.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(Estado_Txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 450, 190, 50));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/3.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, 930));
@@ -75,7 +87,7 @@ public class RobotsInfo extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -117,9 +129,10 @@ public class RobotsInfo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Estado_Txt;
     private javax.swing.JPanel Grid_Panel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton Predecesor_1;
+    private javax.swing.JButton Predecesor_2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -133,12 +146,12 @@ public class RobotsInfo extends javax.swing.JFrame {
         return Grid_Panel;
     }
 
-    public JButton getjButton1() {
-        return jButton1;
+    public JButton getPredecesor_2() {
+        return Predecesor_2;
     }
 
-    public JButton getjButton2() {
-        return jButton2;
+    public JButton getPredecesor_1() {
+        return Predecesor_1;
     }
     
 }

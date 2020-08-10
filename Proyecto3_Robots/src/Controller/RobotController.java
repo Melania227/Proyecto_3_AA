@@ -120,7 +120,7 @@ public abstract class RobotController implements ActionListener{
                 TipoTerreno t =this.robot.getTerreno().getMatrizTerreno()[i][j];
                 
                 if(t == TipoTerreno.BLOQUEADO){
-                    jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\apaol\\OneDrive\\Documentos\\Analisis De Algoritmos\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\4_T.png"));
+                    jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\USUARIO\\OneDrive\\TEC-TERCER SEMESTRE\\ANÁLISIS\\Proyecto 3\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\4_T.png"));
                 }
                 else{
                     bandera = false;
@@ -133,16 +133,16 @@ public abstract class RobotController implements ActionListener{
                     if(null != t)
                         switch (t) {
                         case NORMAL:
-                            if(bandera) jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\apaol\\OneDrive\\Documentos\\Analisis De Algoritmos\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\1_T - copia.png"));
-                            else jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\apaol\\OneDrive\\Documentos\\Analisis De Algoritmos\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\1_T.png"));
+                            if(bandera) jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\USUARIO\\OneDrive\\TEC-TERCER SEMESTRE\\ANÁLISIS\\Proyecto 3\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\1_T - copia.png"));
+                            else jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\USUARIO\\OneDrive\\TEC-TERCER SEMESTRE\\ANÁLISIS\\Proyecto 3\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\1_T.png"));
                             break;
                         case MODERADO:
-                            if(bandera) jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\apaol\\OneDrive\\Documentos\\Analisis De Algoritmos\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\2_T - copia.png"));
-                            else jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\apaol\\OneDrive\\Documentos\\Analisis De Algoritmos\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\2_T.png"));
+                            if(bandera) jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\USUARIO\\OneDrive\\TEC-TERCER SEMESTRE\\ANÁLISIS\\Proyecto 3\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\2_T - copia.png"));
+                            else jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\USUARIO\\OneDrive\\TEC-TERCER SEMESTRE\\ANÁLISIS\\Proyecto 3\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\2_T.png"));
                             break;
                         case DIFICIL:
-                            if(bandera) jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\apaol\\OneDrive\\Documentos\\Analisis De Algoritmos\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\3_T - copia.png"));
-                            else jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\apaol\\OneDrive\\Documentos\\Analisis De Algoritmos\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\3_T.png"));
+                            if(bandera) jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\USUARIO\\OneDrive\\TEC-TERCER SEMESTRE\\ANÁLISIS\\Proyecto 3\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\3_T - copia.png"));
+                            else jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\USUARIO\\OneDrive\\TEC-TERCER SEMESTRE\\ANÁLISIS\\Proyecto 3\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\3_T.png"));
                             break;
                         default:
                             break;

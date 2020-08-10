@@ -54,6 +54,7 @@ public abstract class Controller implements ActionListener{
         for (int i = 1; i < 100; i++) {
             this.m.getNewGeneration();
             this.m.start();
+            //this.m.variacionEntreGeneraciones();
         }
         String s = "";
         for (int i = 0; i < this.m.getHistorialGeneraciones().size(); i++) {

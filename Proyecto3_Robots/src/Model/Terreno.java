@@ -22,19 +22,24 @@ public class Terreno implements Serializable{
         Random rand = new Random();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                int numCasilla = rand.nextInt(4);
-                switch (numCasilla){
-                    case 0:
-                        this.matrizTerreno[i][j] = TipoTerreno.NORMAL;
-                    break;
-                    case 1:
-                        this.matrizTerreno[i][j] = TipoTerreno.DIFICIL;
-                    break;
-                    case 2:
-                        this.matrizTerreno[i][j] = TipoTerreno.MODERADO;
-                    break;
-                    default:
-                        this.matrizTerreno[i][j] = TipoTerreno.BLOQUEADO;
+                if (i == size-1 && j == 0){
+                    this.matrizTerreno[i][j] = TipoTerreno.NORMAL;
+                }
+                else{
+                    int numCasilla = rand.nextInt(4);
+                    switch (numCasilla){
+                        case 0:
+                            this.matrizTerreno[i][j] = TipoTerreno.NORMAL;
+                        break;
+                        case 1:
+                            this.matrizTerreno[i][j] = TipoTerreno.DIFICIL;
+                        break;
+                        case 2:
+                            this.matrizTerreno[i][j] = TipoTerreno.MODERADO;
+                        break;
+                        default:
+                            this.matrizTerreno[i][j] = TipoTerreno.BLOQUEADO;
+                    }
                 }
             }
         }

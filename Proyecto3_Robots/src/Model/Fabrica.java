@@ -23,6 +23,7 @@ public class Fabrica implements Serializable{
     private int indiceMutacion;
     private Terreno terreno;
     private int numGeneracion;
+    private double adaptabilidadTotal;
     
     public Fabrica(int cantidadDeIndividuos, Terreno terreno) {
         Random rand = new Random();
@@ -34,13 +35,16 @@ public class Fabrica implements Serializable{
             this.poblacion.add(new Robot(terreno,i,this.numGeneracion));
         }
         this.terreno = terreno;
+        this.adaptabilidadTotal = 0.0;
     }
     
     public Fabrica(int cantidadDeIndividuos, int indiceMutacion, Terreno terreno) {
-        this.indiceMutacion = indiceMutacion;
+        Random rand = new Random();
+        this.indiceMutacion = rand.nextInt(56);
         this.poblacion = new ArrayList ();
         this.cantidadDeIndividuos = cantidadDeIndividuos;
         this.terreno = terreno;
+        this.adaptabilidadTotal = 0.0;
     }
 
     public int getIndiceMutacion() {
@@ -88,6 +92,15 @@ public class Fabrica implements Serializable{
     public void setCantidadDeIndividuos(int cantidadDeIndividuos) {
         this.cantidadDeIndividuos = cantidadDeIndividuos;
     }
+
+    public double getAdaptabilidadTotal() {
+        return adaptabilidadTotal;
+    }
+
+    public void setAdaptabilidadTotal(double adaptabilidadTotal) {
+        this.adaptabilidadTotal = adaptabilidadTotal;
+    }
+    
     
     public void mutacion(){
        for (int i = 0; i < this.poblacion.size(); i++) {
@@ -169,12 +182,12 @@ public class Fabrica implements Serializable{
             numGanancia = (numGanancia+1)*10;
             calificaciones.add(numGanancia);
             this.poblacion.get(i).setPuntajeAdaptabilidad(numGanancia);
-            //System.out.println("PUNTUACIÓN: " + numGanancia);
             total += calificaciones.get(i);
         }
         for (int i = 0; i < calificaciones.size(); i++) {
             calificaciones.set(i, (double)((calificaciones.get(i)*100)/total));
         }
+        //getAdaptabilidadTotalGen();
         return calificaciones;
     }
     
@@ -194,15 +207,8 @@ public class Fabrica implements Serializable{
     public void cruceEntreIndividuosGen (){
         for (int i = 0; i < this.poblacion.size(); i=i+2) {
             this.poblacion.get(i).cruceEntreRobots(this.poblacion.get(i+1));
-//            System.out.println("i+1 " + this.poblacion.get(i+1).getDatosPadre1()[0] + ", " + this.poblacion.get(i+1).getDatosPadre1()[1]);
-//            System.out.println("i " + this.poblacion.get(i).getDatosPadre1()[0]+ ", " + this.poblacion.get(i).getDatosPadre1()[1]);
             this.poblacion.get(i).setDatosPadre2(this.poblacion.get(i+1).getDatosPadre1());
-            this.poblacion.get(i+1).setDatosPadre2(this.poblacion.get(i).getDatosPadre1());
-//            System.out.println("Datos del padre 2 (i): " + "MIJO: " + i +" "+ + this.poblacion.get(i).getDatosPadre1()[0] + ", " + this.poblacion.get(i).getDatosPadre1()[1]);
-//            System.out.println("Datos del padre 2 (i+1): " + "MIJO: " + i +" "+ this.poblacion.get(i+1).getDatosPadre1()[0] + ", " + this.poblacion.get(i+1).getDatosPadre1()[1]);
-//            System.out.println("i+1 2 " + this.poblacion.get(i+1).getDatosPadre2()[0] + ", " + this.poblacion.get(i+1).getDatosPadre2()[1]);
-//            System.out.println("i 2 " + this.poblacion.get(i).getDatosPadre2()[0]+ ", " + this.poblacion.get(i).getDatosPadre2()[1]);
-            
+            this.poblacion.get(i+1).setDatosPadre2(this.poblacion.get(i).getDatosPadre1()); 
         }
     }
     
@@ -221,5 +227,13 @@ public class Fabrica implements Serializable{
             this.poblacion.get(i).setPosiblesMovimientos(new ArrayList());
             this.poblacion.get(i).setPuntajeAdaptabilidad(0);
         }
+    }
+    
+    public void getAdaptabilidadTotalGen(){
+        double adapTotal = 0;
+        for (int i = 0; i < this.poblacion.size(); i++) {
+            adapTotal += this.poblacion.get(i).getPuntajeAdaptabilidad();
+        }
+        this.adaptabilidadTotal = adapTotal;
     }
 }

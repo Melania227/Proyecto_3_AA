@@ -661,6 +661,7 @@ public class Robot implements Serializable{
         }
         if (this.pos[0]==0 && this.pos[1]==this.terreno.getSizeTerreno()-1){
             this.finalizado = true;
+            casillasVisitadas.add(this.pos);
         }
     }
     

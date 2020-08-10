@@ -48,7 +48,9 @@ public class RobotsInfo extends javax.swing.JFrame {
         Cam_3 = new javax.swing.JLabel();
         Jpanel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1400, 985));
+        setMinimumSize(new java.awt.Dimension(1400, 985));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 15, 34));
@@ -143,7 +145,7 @@ public class RobotsInfo extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
         );
 
         pack();

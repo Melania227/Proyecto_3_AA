@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -26,7 +25,6 @@ public class Medio implements Serializable{
         this.terreno = new Terreno (sizeTerreno);
         this.fabricaRobots = new Fabrica(cantRobots, this.terreno);
         this.historialGeneraciones = new ArrayList ();
-        this.historialGeneraciones.add(this.fabricaRobots);
         this.numGeneracionActual = 0;
     }
     
@@ -58,6 +56,14 @@ public class Medio implements Serializable{
     public void setTerreno(Terreno terreno) {
         this.terreno = terreno;
     }
+
+    public int getNumGeneracionActual() {
+        return numGeneracionActual;
+    }
+
+    public void setNumGeneracionActual(int numGeneracionActual) {
+        this.numGeneracionActual = numGeneracionActual;
+    }
     
     public void start (){
         int llegaron = 0;
@@ -81,17 +87,24 @@ public class Medio implements Serializable{
                 this.fabricaRobots.getPoblacion().get(i).getBateria().disminuirCarga();
             }
         }
+        
         this.historialGeneraciones.add(this.fabricaRobots);
+       
         //System.out.println("LLEGARON SOLO: " + llegaron);
     }
     
     public void getNewGeneration (){
+        //System.out.println("GENERACION: " + this.numGeneracionActual);
         Fabrica f = this.fabricaRobots.getNuevaGeneracion();
         this.numGeneracionActual = this.numGeneracionActual +1;
-        f.cruceEntreIndividuosGen();
-        f.getNuevasCaracteristicas();
         f.setNumGeneracion(this.numGeneracionActual);
+        f.cruceEntreIndividuosGen();
+        
+        f.mutacion();
+        f.getNuevasCaracteristicas();
+        //System.out.println("GENERACION: " + this.numGeneracionActual);
         this.fabricaRobots = f;
+        //System.out.println("GENERACION F: " + this.fabricaRobots.getNumGeneracion());
         //start();
     }
     

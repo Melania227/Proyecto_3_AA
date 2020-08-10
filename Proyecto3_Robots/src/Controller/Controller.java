@@ -51,16 +51,15 @@ public abstract class Controller implements ActionListener{
     public void Menu(int cantidad){
         this.m = new Medio(cantidad, 20);
         this.m.start();
-        for (int i = 2; i < 100; i++) {
+        for (int i = 1; i < 100; i++) {
             this.m.getNewGeneration();
             this.m.start();
         }
-        
         String s = "";
         for (int i = 0; i < this.m.getHistorialGeneraciones().size(); i++) {
            // s += "Generación #" +i+":\n";
            // s += "  Cantidad de robots:" +this.m.getHistorialGeneraciones().get(i).getPoblacion().size()+":\n";
-        }
+        }        
         this.menuG.getInfo_Txt().setText(s);
         int n = this.m.getHistorialGeneraciones().size()-1;
         SpinnerModel model = new SpinnerNumberModel(0, 0, n, 1);
@@ -83,6 +82,7 @@ public abstract class Controller implements ActionListener{
         this.menu.getIniciar_Boton().addActionListener(this);
         this.menuG.getBuscar().addActionListener(this);
         this.menuG.getSeleccionar().addActionListener(this);
+        this.menuG.getBack_btn().addActionListener(this);
     }
     
     @Override
@@ -95,10 +95,16 @@ public abstract class Controller implements ActionListener{
             MenuG((Integer) this.menuG.getGeneraciones().getValue());
         }
         if(event.getSource().equals(this.menuG.getBuscar())){
-           int i = (Integer) this.menuG.getRobot().getValue();
-           Robot robot = this.m.getHistorialGeneraciones().get(this.generacion_).getPoblacion().get(i);
-           RobotController robotContr = new RobotController(robot, i, generacion_) {};
-           robotContr.start();
+            int i = (Integer) this.menuG.getRobot().getValue();
+            Robot robot = this.m.getHistorialGeneraciones().get(this.generacion_).getPoblacion().get(i);
+            RobotController robotContr = new RobotController(robot, i, generacion_, this.m.getHistorialGeneraciones()) {};
+            robotContr.start();
+        }
+        if(event.getSource().equals(this.menuG.getBack_btn())){
+            this.m = null;
+            this.menuG.dispose();
+            Controller controller = new Controller() {};
+            controller.start();
         }
     }
     

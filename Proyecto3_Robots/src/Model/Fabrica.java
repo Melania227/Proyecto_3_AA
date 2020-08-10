@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -28,11 +29,11 @@ public class Fabrica implements Serializable{
         this.indiceMutacion = rand.nextInt(56);
         this.poblacion = new ArrayList ();
         this.cantidadDeIndividuos = cantidadDeIndividuos;
+        this.numGeneracion = 0;
         for (int i = 0; i < cantidadDeIndividuos; i++) {
-            this.poblacion.add(new Robot(terreno));
+            this.poblacion.add(new Robot(terreno,i,this.numGeneracion));
         }
         this.terreno = terreno;
-        this.numGeneracion = 0;
     }
     
     public Fabrica(int cantidadDeIndividuos, int indiceMutacion, Terreno terreno) {
@@ -89,22 +90,28 @@ public class Fabrica implements Serializable{
     }
     
     public void mutacion(){
-        cruceGenesPrint();
+       for (int i = 0; i < this.poblacion.size(); i++) {
+            this.poblacion.get(i).setMutacionIndices(new ArrayList());
+        }
         Random rand = new Random();
         int i = rand.nextInt(this.cantidadDeIndividuos);
         int j = rand.nextInt(56);
         for (int m = 0; m < this.indiceMutacion; m++) {
+            
             if (this.poblacion.get(i).getGenes().getChain().get(j) == 1){
                 this.poblacion.get(i).getGenes().getChain().set(j, 0);
             }
             else{
                 this.poblacion.get(i).getGenes().getChain().set(j, 1);
             }
+            this.poblacion.get(i).getMutacionIndices().add(j);
+            System.out.println(this.poblacion.get(i).getNumGeneracion()+" "+this.poblacion.get(i).getNumRobotEnPoblación());
             i = rand.nextInt(this.cantidadDeIndividuos);
             j = rand.nextInt(56);
+            
         }
         
-        cruceGenesPrint();
+        
     }
 
     public void cruceGenesPrint() {
@@ -130,7 +137,10 @@ public class Fabrica implements Serializable{
         
         for (int i = 0; i < seleccionRobots.size(); i++) {
             Robot nuevoRobot = (Robot) Clonador.deepCopy(seleccionRobots.get(i));
-            nuevoRobot.setDatosPadre1(numGeneracion, i);
+            nuevoRobot.setNumRobotEnPoblación(i);
+            nuevoRobot.setNumGeneracion(this.numGeneracion+1);
+            nuevoRobot.setDatosPadre1(this.numGeneracion, seleccionRobots.get(i).getNumRobotEnPoblación());
+//            System.out.println("Datos del padre: " + this.numGeneracion + ", " + i);
             nuevaGeneracion.poblacion.add(nuevoRobot);
         }
         
@@ -184,8 +194,15 @@ public class Fabrica implements Serializable{
     public void cruceEntreIndividuosGen (){
         for (int i = 0; i < this.poblacion.size(); i=i+2) {
             this.poblacion.get(i).cruceEntreRobots(this.poblacion.get(i+1));
+//            System.out.println("i+1 " + this.poblacion.get(i+1).getDatosPadre1()[0] + ", " + this.poblacion.get(i+1).getDatosPadre1()[1]);
+//            System.out.println("i " + this.poblacion.get(i).getDatosPadre1()[0]+ ", " + this.poblacion.get(i).getDatosPadre1()[1]);
             this.poblacion.get(i).setDatosPadre2(this.poblacion.get(i+1).getDatosPadre1());
             this.poblacion.get(i+1).setDatosPadre2(this.poblacion.get(i).getDatosPadre1());
+//            System.out.println("Datos del padre 2 (i): " + "MIJO: " + i +" "+ + this.poblacion.get(i).getDatosPadre1()[0] + ", " + this.poblacion.get(i).getDatosPadre1()[1]);
+//            System.out.println("Datos del padre 2 (i+1): " + "MIJO: " + i +" "+ this.poblacion.get(i+1).getDatosPadre1()[0] + ", " + this.poblacion.get(i+1).getDatosPadre1()[1]);
+//            System.out.println("i+1 2 " + this.poblacion.get(i+1).getDatosPadre2()[0] + ", " + this.poblacion.get(i+1).getDatosPadre2()[1]);
+//            System.out.println("i 2 " + this.poblacion.get(i).getDatosPadre2()[0]+ ", " + this.poblacion.get(i).getDatosPadre2()[1]);
+            
         }
     }
     

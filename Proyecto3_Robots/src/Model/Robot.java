@@ -1,3 +1,11 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/*
+ * EN CLASE ROBOT
+ */
 package Model;
 
 import java.io.Serializable;
@@ -6,7 +14,7 @@ import java.util.Random;
 
 /**
  *
- * @author USUARIO
+ * @author Velvet Chimichanga es un gato hermoso al cual amo mucho muchito :) <3 <3 
  */
 public class Robot implements Serializable{
     private Camara camara;
@@ -23,8 +31,10 @@ public class Robot implements Serializable{
     private int[] datosPadre1;
     private int[] datosPadre2;
     private int numGeneracion;
+    private int numRobotEnPoblación;
+    private ArrayList <Integer> mutacionIndices;
     
-    public Robot (Terreno terreno){
+    public Robot (Terreno terreno, int numRobot, int numGen){
         this.terreno = terreno;
         Random random = new Random();
         this.genes = new Cromosomas ();
@@ -49,7 +59,9 @@ public class Robot implements Serializable{
         this.puntajeAdaptabilidad = 0;
         this.datosPadre1= new int [2];
         this.datosPadre2= new int [2];
-        this.numGeneracion = 0;
+        this.numGeneracion = numGen;
+        this.numRobotEnPoblación = numRobot;
+        this.mutacionIndices = new ArrayList();
     }
 
     public Robot(Camara camara, Bateria bateria, Motor motor) {
@@ -185,6 +197,23 @@ public class Robot implements Serializable{
         this.numGeneracion = numGeneracion;
     }
 
+    public int getNumRobotEnPoblación() {
+        return numRobotEnPoblación;
+    }
+
+    public void setNumRobotEnPoblación(int numRobotEnPoblación) {
+        this.numRobotEnPoblación = numRobotEnPoblación;
+    }
+
+    public ArrayList<Integer> getMutacionIndices() {
+        return mutacionIndices;
+    }
+
+    public void setMutacionIndices(ArrayList<Integer> mutacionIndices) {
+        this.mutacionIndices = mutacionIndices;
+    }
+    
+    
     
     public Bateria getBateriaByGenes (){
         int num = this.genes.generarValor(1);
@@ -642,3 +671,4 @@ public class Robot implements Serializable{
         this.bateria.setCarga(this.bateria.getCarga()-consumo);
     }
 }
+

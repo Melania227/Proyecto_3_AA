@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.Fabrica;
 import Model.Robot;
 import Model.TipoTerreno;
 import View.RobotsInfo;
@@ -13,7 +14,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -24,14 +24,20 @@ import javax.swing.JPanel;
 public abstract class RobotController implements ActionListener{
     Robot robot;
     RobotsInfo ventana;
+    RobotsInfo predecesor1;
+    RobotsInfo predecesor2;
+    private ArrayList <Fabrica> historialGeneraciones;
     int numero;
     int gen;
     
-    public RobotController(Robot robot, int numero, int gen){
+    public RobotController(Robot robot, int numero, int gen, ArrayList <Fabrica> historialGeneraciones ){
         this.robot = robot;
         this.ventana = new RobotsInfo();
         this.numero = numero;
         this.gen = gen;
+        this.predecesor1 = null;
+        this.predecesor2 = null;
+        this.historialGeneraciones = historialGeneraciones;
         _init_componentes();
     }
 
@@ -43,9 +49,19 @@ public abstract class RobotController implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent event) {
         if(event.getSource().equals(this.ventana.getPredecesor_1())){
+            int genPadre = this.robot.getDatosPadre1()[0];
+            int num_ = this.robot.getDatosPadre1()[1];
+            Robot robot_ = historialGeneraciones.get(genPadre).getPoblacion().get(num_);
+            RobotController robotContr = new RobotController(robot_, num_, genPadre, historialGeneraciones) {};
+            robotContr.start();
         }
-        if(event.getSource().equals(this.ventana.getPredecesor_1())){
-            
+        if(event.getSource().equals(this.ventana.getPredecesor_2())){
+            int genPadre = this.robot.getDatosPadre2()[0];
+            System.out.println(genPadre);
+            int num_ = this.robot.getDatosPadre2()[1];
+            Robot robot_2 = historialGeneraciones.get(genPadre).getPoblacion().get(num_);
+            RobotController robotContr = new RobotController(robot_2, num_, genPadre, historialGeneraciones) {};
+            robotContr.start();
         }
         
     }
@@ -63,9 +79,9 @@ public abstract class RobotController implements ActionListener{
         
         //Bateria
         this.ventana.getBateria_1().setText(String.valueOf(this.robot.getBateria().getSize()));
-        this.ventana.getBateria_2().setText(String.valueOf(this.robot.getBateria().getCarga()));
+        if(this.robot.getBateria().getCarga()<0) this.ventana.getBateria_2().setText("0");
+        else this.ventana.getBateria_2().setText(String.valueOf(this.robot.getBateria().getCarga()));
         this.ventana.getBateria_3().setText(String.valueOf(this.robot.getBateria().getCosto()));
-        
         //Cámara
         this.ventana.getCam_1().setText(String.valueOf(this.robot.getCamara().getTipo()));
         this.ventana.getCam_2().setText(String.valueOf(this.robot.getCamara().getConsumo()));
@@ -78,11 +94,20 @@ public abstract class RobotController implements ActionListener{
         
         //GENES
         ArrayList<Integer> lista = this.robot.getGenes().getChain();
-        for(int num : lista){
+        for(int i = 0;i< lista.size(); i++){
             JLabel jLabel4 = new javax.swing.JLabel();
             jLabel4.setFont(new Font("Lucida Fax", Font.BOLD, 18));
             jLabel4.setForeground (Color.white);
-            jLabel4.setText(String.valueOf(num));
+            if(!this.robot.getMutacionIndices().isEmpty()){
+                System.out.println("llego");
+                for(int indice : this.robot.getMutacionIndices()) 
+                    if(indice == i) {
+                        jLabel4.setForeground (Color.YELLOW);
+                        
+                    }
+                
+            }
+            jLabel4.setText(String.valueOf(lista.get(i)));
             this.ventana.getGenes_TXT().add(jLabel4);
         }
         

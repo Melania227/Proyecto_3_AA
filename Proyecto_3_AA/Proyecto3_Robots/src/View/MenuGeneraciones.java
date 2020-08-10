@@ -44,7 +44,6 @@ public class MenuGeneraciones extends javax.swing.JFrame {
         Seleccionar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Info_Txt = new javax.swing.JTextArea();
-        Back_btn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -85,7 +84,7 @@ public class MenuGeneraciones extends javax.swing.JFrame {
                 SeleccionarActionPerformed(evt);
             }
         });
-        jPanel1.add(Seleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 460, 160, 40));
+        jPanel1.add(Seleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 460, 160, 40));
 
         Info_Txt.setColumns(20);
         Info_Txt.setFont(new java.awt.Font("Lucida Fax", 0, 12)); // NOI18N
@@ -95,17 +94,6 @@ public class MenuGeneraciones extends javax.swing.JFrame {
         jScrollPane1.setViewportView(Info_Txt);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 70, 250, 730));
-
-        Back_btn.setBackground(new java.awt.Color(255, 255, 255));
-        Back_btn.setFont(new java.awt.Font("Lucida Fax", 0, 18)); // NOI18N
-        Back_btn.setText("Volver");
-        Back_btn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        Back_btn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Back_btnActionPerformed(evt);
-            }
-        });
-        jPanel1.add(Back_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 680, 140, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/2.1.gif"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 870));
@@ -134,10 +122,6 @@ public class MenuGeneraciones extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.GeneracionesInt = (Integer) Generaciones.getValue();
     }//GEN-LAST:event_SeleccionarActionPerformed
-
-    private void Back_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Back_btnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Back_btnActionPerformed
     
     /**
      * @param args the command line arguments
@@ -176,7 +160,6 @@ public class MenuGeneraciones extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Back_btn;
     private javax.swing.JButton Buscar;
     private javax.swing.JSpinner Generaciones;
     private javax.swing.JTextArea Info_Txt;
@@ -215,9 +198,7 @@ public class MenuGeneraciones extends javax.swing.JFrame {
         return Info_Txt;
     }
 
-    public JButton getBack_btn() {
-        return Back_btn;
-    }
+
 
     public JLabel getjLabel1() {
         return jLabel1;

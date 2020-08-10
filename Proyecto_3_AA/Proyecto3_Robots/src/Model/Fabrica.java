@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -24,6 +23,7 @@ public class Fabrica implements Serializable{
     private Terreno terreno;
     private int numGeneracion;
     private double adaptabilidadTotal;
+    public int llegaron;
     
     public Fabrica(int cantidadDeIndividuos, Terreno terreno) {
         Random rand = new Random();
@@ -118,7 +118,7 @@ public class Fabrica implements Serializable{
                 this.poblacion.get(i).getGenes().getChain().set(j, 1);
             }
             this.poblacion.get(i).getMutacionIndices().add(j);
-            System.out.println(this.poblacion.get(i).getNumGeneracion()+" "+this.poblacion.get(i).getNumRobotEnPoblación());
+            //System.out.println(this.poblacion.get(i).getNumGeneracion()+" "+this.poblacion.get(i).getNumRobotEnPoblación());
             i = rand.nextInt(this.cantidadDeIndividuos);
             j = rand.nextInt(56);
             
@@ -187,7 +187,7 @@ public class Fabrica implements Serializable{
         for (int i = 0; i < calificaciones.size(); i++) {
             calificaciones.set(i, (double)((calificaciones.get(i)*100)/total));
         }
-        //getAdaptabilidadTotalGen();
+        getAdaptabilidadTotalGen();
         return calificaciones;
     }
     

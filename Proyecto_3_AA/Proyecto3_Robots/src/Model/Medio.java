@@ -1,3 +1,6 @@
+
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -20,6 +23,8 @@ public class Medio implements Serializable{
     private Terreno terreno;
     private ArrayList <Fabrica> historialGeneraciones;
     private int numGeneracionActual;
+    
+
 
     public Medio(int cantRobots, int sizeTerreno) {
         this.terreno = new Terreno (sizeTerreno);
@@ -87,10 +92,10 @@ public class Medio implements Serializable{
                 this.fabricaRobots.getPoblacion().get(i).getBateria().disminuirCarga();
             }
         }
-        
+        this.fabricaRobots.llegaron = llegaron;
         this.historialGeneraciones.add(this.fabricaRobots);
        
-        System.out.println("LLEGARON SOLO: " + llegaron);
+       // System.out.println("LLEGARON SOLO: " + llegaron);
     }
     
     public void getNewGeneration (){
@@ -112,15 +117,16 @@ public class Medio implements Serializable{
         }
     }
     
-//    public void variacionEntreGeneraciones(){
-//        //(V2-V1)/V1*100
-//        double adaptabilidadGen1 = this.historialGeneraciones.get(this.historialGeneraciones.size()-2).getAdaptabilidadTotal();
-//        double adaptabilidadGen2 = this.historialGeneraciones.get(this.historialGeneraciones.size()-3).getAdaptabilidadTotal();
-//        double res = adaptabilidadGen1-adaptabilidadGen2;
-//        System.out.println("PORCENTAJE 1: " + adaptabilidadGen1);
-//        System.out.println("PORCENTAJE 2: " + adaptabilidadGen2);
-//        System.out.println("PORCENTAJE: " + res);
-//        //if (res)
-//        //return true;
-//    }
+    public boolean variacionEntreGeneraciones(){
+        //(V2-V1)/V1*100
+        if (this.historialGeneraciones.size()>=3){
+            double adaptabilidadGen1 = this.historialGeneraciones.get(this.historialGeneraciones.size()-2).getAdaptabilidadTotal();
+            double adaptabilidadGen2 = this.historialGeneraciones.get(this.historialGeneraciones.size()-3).getAdaptabilidadTotal();
+            double res = (adaptabilidadGen1-adaptabilidadGen2)/(adaptabilidadGen2)*100;
+            if (Math.abs(res)<0.1){
+                return true;
+            }
+        }
+        return false;
+    }
 }

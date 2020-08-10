@@ -40,6 +40,8 @@ public class Menu extends javax.swing.JFrame {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Number_I.setFont(new java.awt.Font("Lucida Fax", 0, 18)); // NOI18N
+        Number_I.setModel(new javax.swing.SpinnerNumberModel(2, 2, null, 2));
+        Number_I.setToolTipText("");
         Number_I.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.add(Number_I, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 440, 130, 40));
 

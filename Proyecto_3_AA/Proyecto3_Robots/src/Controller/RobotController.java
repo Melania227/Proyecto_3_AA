@@ -57,7 +57,7 @@ public abstract class RobotController implements ActionListener{
         }
         if(event.getSource().equals(this.ventana.getPredecesor_2())){
             int genPadre = this.robot.getDatosPadre2()[0];
-            System.out.println(genPadre);
+            //.out.println(genPadre);
             int num_ = this.robot.getDatosPadre2()[1];
             Robot robot_2 = historialGeneraciones.get(genPadre).getPoblacion().get(num_);
             RobotController robotContr = new RobotController(robot_2, num_, genPadre, historialGeneraciones) {};
@@ -67,6 +67,12 @@ public abstract class RobotController implements ActionListener{
     }
 
     void start() {
+        //Botones 
+        if(this.robot.getNumGeneracion()==0){ 
+            this.ventana.getPredecesor_1().setEnabled(false);
+            this.ventana.getPredecesor_2().setEnabled(false);
+        }
+        
         //Titulo
         this.ventana.setTitle("Robot #"+this.numero+" - "+"Generación #"+this.gen);
         //Estado
@@ -76,6 +82,8 @@ public abstract class RobotController implements ActionListener{
         else{
             this.ventana.getEstado_Txt().setText("Inconcluso");
         }
+        //Puntaje
+        this.ventana.getPuntaje_Txt().setText(String.valueOf(this.robot.getPuntajeAdaptabilidad()));
         
         //Bateria
         this.ventana.getBateria_1().setText(String.valueOf(this.robot.getBateria().getSize()));
@@ -96,10 +104,9 @@ public abstract class RobotController implements ActionListener{
         ArrayList<Integer> lista = this.robot.getGenes().getChain();
         for(int i = 0;i< lista.size(); i++){
             JLabel jLabel4 = new javax.swing.JLabel();
-            jLabel4.setFont(new Font("Lucida Fax", Font.BOLD, 18));
+            jLabel4.setFont(new Font("Lucida Fax", Font.PLAIN, 18));
             jLabel4.setForeground (Color.white);
             if(!this.robot.getMutacionIndices().isEmpty()){
-                System.out.println("llego");
                 for(int indice : this.robot.getMutacionIndices()) 
                     if(indice == i) {
                         jLabel4.setForeground (Color.YELLOW);
@@ -120,7 +127,7 @@ public abstract class RobotController implements ActionListener{
                 TipoTerreno t =this.robot.getTerreno().getMatrizTerreno()[i][j];
                 
                 if(t == TipoTerreno.BLOQUEADO){
-                    jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\USUARIO\\OneDrive\\TEC-TERCER SEMESTRE\\ANÁLISIS\\Proyecto 3\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\4_T.png"));
+                    jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\apaol\\OneDrive\\Documentos\\Analisis De Algoritmos\\Proyecto_3_AA\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\4_T.png"));
                 }
                 else{
                     bandera = false;
@@ -133,16 +140,16 @@ public abstract class RobotController implements ActionListener{
                     if(null != t)
                         switch (t) {
                         case NORMAL:
-                            if(bandera) jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\USUARIO\\OneDrive\\TEC-TERCER SEMESTRE\\ANÁLISIS\\Proyecto 3\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\1_T - copia.png"));
-                            else jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\USUARIO\\OneDrive\\TEC-TERCER SEMESTRE\\ANÁLISIS\\Proyecto 3\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\1_T.png"));
+                            if(bandera) jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\apaol\\OneDrive\\Documentos\\Analisis De Algoritmos\\Proyecto_3_AA\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\1_T - copia.png"));
+                            else jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\apaol\\OneDrive\\Documentos\\Analisis De Algoritmos\\Proyecto_3_AA\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\1_T.png"));
                             break;
                         case MODERADO:
-                            if(bandera) jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\USUARIO\\OneDrive\\TEC-TERCER SEMESTRE\\ANÁLISIS\\Proyecto 3\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\2_T - copia.png"));
-                            else jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\USUARIO\\OneDrive\\TEC-TERCER SEMESTRE\\ANÁLISIS\\Proyecto 3\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\2_T.png"));
+                            if(bandera) jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\apaol\\OneDrive\\Documentos\\Analisis De Algoritmos\\Proyecto_3_AA\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\2_T - copia.png"));
+                            else jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\apaol\\OneDrive\\Documentos\\Analisis De Algoritmos\\Proyecto_3_AA\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\2_T.png"));
                             break;
                         case DIFICIL:
-                            if(bandera) jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\USUARIO\\OneDrive\\TEC-TERCER SEMESTRE\\ANÁLISIS\\Proyecto 3\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\3_T - copia.png"));
-                            else jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\USUARIO\\OneDrive\\TEC-TERCER SEMESTRE\\ANÁLISIS\\Proyecto 3\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\3_T.png"));
+                            if(bandera) jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\apaol\\OneDrive\\Documentos\\Analisis De Algoritmos\\Proyecto_3_AA\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\3_T - copia.png"));
+                            else jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\apaol\\OneDrive\\Documentos\\Analisis De Algoritmos\\Proyecto_3_AA\\Proyecto_3_AA\\Proyecto3_Robots\\src\\Images\\3_T.png"));
                             break;
                         default:
                             break;
